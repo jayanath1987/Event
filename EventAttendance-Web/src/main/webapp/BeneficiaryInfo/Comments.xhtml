@@ -1,0 +1,216 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user" value="#{commentview.userDetails.username}" />
+	<ui:param name="bean" value="#{identificationInfoView}" />
+	<ui:define name="content">
+
+
+
+		<p:steps styleClass="custom"
+			activeIndex="#{commentview.uiMode=='new'?10:12}"
+			readonly="#{(commentview.uiMode=='new')}">
+			<p:menuitem value="${msg.identificationDetails}"
+				url="BIIdentificationInfo.xhtml?#{commentview.navParam}" />
+			<p:menuitem value="${msg.sociologicalInformation}"
+				url="BISocialogicalInfo.xhtml?#{commentview.navParam}" />
+			<p:menuitem value="${msg.averageFamilyExpenses}"
+				url="BIFamilyExpenses.xhtml?#{commentview.navParam}" />
+			<p:menuitem value="${msg.averageMonthlyIncome}"
+				url="BIMonthlyIncome.xhtml?#{commentview.navParam}" />
+			<p:menuitem value="${msg.savings}"
+				url="BISavings.xhtml?#{commentview.navParam}" />
+			<p:menuitem value="${msg.assets}"
+				url="BIAssets.xhtml?#{commentview.navParam}" />
+			<p:menuitem value="${msg.otherAssets}"
+				url="BIOtherAssets.xhtml?#{commentview.navParam}" />
+			<p:menuitem value="${msg.indebtedness}"
+				url="BIIndebitness.xhtml?#{commentview.navParam}" />
+			<p:menuitem value="${msg.house}"
+				url="BIHouse.xhtml?#{commentview.navParam}" />
+			<p:menuitem value="${msg.socialRelationship}"
+				url="BISocialRelationship.xhtml?#{commentview.navParam}" />
+			<p:menuitem value="${msg.otherInformation}"
+				url="BIOtherInfo.xhtml?#{commentview.navParam}" />
+			<p:menuitem value="${msg.comment}"
+				url="Comments.xhtml?#{commentview.navParam}" />
+		</p:steps>
+
+		<h:form id="frmComments">
+			<p:growl id="growl" showDetail="true" sticky="false" />
+			<p:panelGrid columns="3" layout="grid" id="comment">
+
+				<p:outputLabel value="#" />
+				<p:outputLabel value="${msg.commentsAvalable}" />
+				<p:outputLabel value="${msg.comment}" />
+
+				<p:outputLabel value="1. ${msg.identificationDetails}" />
+
+				<p:selectOneRadio
+					value="#{commentview.reviewcommentsDto.comment1IsAvailable}"
+					immediate="true">
+					<f:selectItem itemLabel="${msg.selectYes}" itemValue="#{true}" />
+					<f:selectItem itemLabel="${msg.selectNo}" itemValue="#{false}" />
+					<p:ajax update="comment1IsAvailable" />
+				</p:selectOneRadio>
+
+
+				<p:inputTextarea rows="2" cols="33" id="comment1IsAvailable"
+					disabled="#{!commentview.reviewcommentsDto.comment1IsAvailable}"
+					value="#{commentview.reviewcommentsDto.comment1}" />
+
+
+				<p:outputLabel value="2.${msg.sociologicalInformation}" />
+
+
+				<p:selectOneRadio
+					value="#{commentview.reviewcommentsDto.comment2IsAvailable}"
+					immediate="true">
+					<f:selectItem itemLabel="${msg.selectYes}" itemValue="#{true}" />
+					<f:selectItem itemLabel="${msg.selectNo}" itemValue="#{false}" />
+					<p:ajax update="comment2IsAvailable" />
+				</p:selectOneRadio>
+
+				<p:inputTextarea rows="2" cols="33" id="comment2IsAvailable"
+					disabled="#{!commentview.reviewcommentsDto.comment2IsAvailable}"
+					value="#{commentview.reviewcommentsDto.comment2}" />
+
+
+				<p:outputLabel value="3.${msg.averageFamilyExpenses}" />
+
+				<p:selectOneRadio
+					value="#{commentview.reviewcommentsDto.comment3IsAvailable}"
+					immediate="true">
+					<f:selectItem itemLabel="${msg.selectYes}" itemValue="#{true}" />
+					<f:selectItem itemLabel="${msg.selectNo}" itemValue="#{false}" />
+					<p:ajax update="comment3IsAvailable" />
+				</p:selectOneRadio>
+
+				<p:inputTextarea rows="2" cols="33" id="comment3IsAvailable"
+					disabled="#{!commentview.reviewcommentsDto.comment3IsAvailable}"
+					value="#{commentview.reviewcommentsDto.comment3}" />
+
+
+				<p:outputLabel value="4.${msg.averageMonthlyIncome}" />
+
+				<p:selectOneRadio
+					value="#{commentview.reviewcommentsDto.comment4IsAvailable}"
+					immediate="true">
+					<f:selectItem itemLabel="${msg.selectYes}" itemValue="#{true}" />
+					<f:selectItem itemLabel="${msg.selectNo}" itemValue="#{false}" />
+					<p:ajax update="comment4IsAvailable" />
+				</p:selectOneRadio>
+
+				<p:inputTextarea rows="2" cols="33" id="comment4IsAvailable"
+					disabled="#{!commentview.reviewcommentsDto.comment4IsAvailable}"
+					value="#{commentview.reviewcommentsDto.comment4}" />
+
+
+				<p:outputLabel value="5.${msg.savings}" />
+
+				<p:selectOneRadio
+					value="#{commentview.reviewcommentsDto.comment5IsAvailable}"
+					immediate="true">
+					<f:selectItem itemLabel="${msg.selectYes}" itemValue="#{true}" />
+					<f:selectItem itemLabel="${msg.selectNo}" itemValue="#{false}" />
+					<p:ajax update="comment5IsAvailable" />
+				</p:selectOneRadio>
+
+				<p:inputTextarea rows="2" cols="33" id="comment5IsAvailable"
+					disabled="#{!commentview.reviewcommentsDto.comment5IsAvailable}"
+					value="#{commentview.reviewcommentsDto.comment5}" />
+
+
+				<p:outputLabel value="6.${msg.assets}" />
+				<p:selectOneRadio
+					value="#{commentview.reviewcommentsDto.comment6IsAvailable}"
+					immediate="true">
+					<f:selectItem itemLabel="${msg.selectYes}" itemValue="#{true}" />
+					<f:selectItem itemLabel="${msg.selectNo}" itemValue="#{false}" />
+					<p:ajax update="comment6IsAvailable" />
+				</p:selectOneRadio>
+				<p:inputTextarea rows="2" cols="33" id="comment6IsAvailable"
+					disabled="#{!commentview.reviewcommentsDto.comment6IsAvailable}"
+					value="#{commentview.reviewcommentsDto.comment6}" />
+
+
+				<p:outputLabel value="7.${msg.otherAssets}" />
+
+				<p:selectOneRadio
+					value="#{commentview.reviewcommentsDto.comment7IsAvailable}"
+					immediate="true">
+					<f:selectItem itemLabel="${msg.selectYes}" itemValue="#{true}" />
+					<f:selectItem itemLabel="${msg.selectNo}" itemValue="#{false}" />
+					<p:ajax update="comment7IsAvailable" />
+				</p:selectOneRadio>
+
+				<p:inputTextarea rows="2" cols="33" id="comment7IsAvailable"
+					disabled="#{!commentview.reviewcommentsDto.comment7IsAvailable}"
+					value="#{commentview.reviewcommentsDto.comment7}" />
+
+
+				<p:outputLabel value="8.${msg.indebtedness}" />
+				<p:selectOneRadio
+					value="#{commentview.reviewcommentsDto.comment8IsAvailable}"
+					immediate="true">
+					<f:selectItem itemLabel="${msg.selectYes}" itemValue="#{true}" />
+					<f:selectItem itemLabel="${msg.selectNo}" itemValue="#{false}" />
+					<p:ajax update="comment8IsAvailable" />
+				</p:selectOneRadio>
+				<p:inputTextarea rows="2" cols="33" id="comment8IsAvailable"
+					disabled="#{!commentview.reviewcommentsDto.comment8IsAvailable}"
+					value="#{commentview.reviewcommentsDto.comment8}" />
+
+
+				<p:outputLabel value="9.${msg.house}" />
+				<p:selectOneRadio
+					value="#{commentview.reviewcommentsDto.comment9IsAvailable}"
+					immediate="true">
+					<f:selectItem itemLabel="${msg.selectYes}" itemValue="#{true}" />
+					<f:selectItem itemLabel="${msg.selectNo}" itemValue="#{false}" />
+					<p:ajax update="comment9IsAvailable" />
+				</p:selectOneRadio>
+				<p:inputTextarea rows="2" cols="33" id="comment9IsAvailable"
+					disabled="#{!commentview.reviewcommentsDto.comment9IsAvailable}"
+					value="#{commentview.reviewcommentsDto.comment9}" />
+
+
+				<p:outputLabel value="10.${msg.socialRelationship}" />
+				<p:selectOneRadio
+					value="#{commentview.reviewcommentsDto.comment10IsAvailable}"
+					immediate="true">
+					<f:selectItem itemLabel="${msg.selectYes}" itemValue="#{true}" />
+					<f:selectItem itemLabel="${msg.selectNo}" itemValue="#{false}" />
+					<p:ajax update="comment10IsAvailable" />
+				</p:selectOneRadio>
+
+				<p:inputTextarea rows="2" cols="33" id="comment10IsAvailable"
+					disabled="#{!commentview.reviewcommentsDto.comment10IsAvailable}"
+					value="#{commentview.reviewcommentsDto.comment10}" />
+
+
+				<p:outputLabel value="11.${msg.otherInformation}" />
+				<p:selectOneRadio
+					value="#{commentview.reviewcommentsDto.comment11IsAvailable}"
+					immediate="true">
+					<f:selectItem itemLabel="${msg.selectYes}" itemValue="#{true}" />
+					<f:selectItem itemLabel="${msg.selectNo}" itemValue="#{false}" />
+					<p:ajax update="comment11IsAvailable" />
+				</p:selectOneRadio>
+
+				<p:inputTextarea rows="2" cols="33" id="comment11IsAvailable"
+					disabled="#{!commentview.reviewcommentsDto.comment11IsAvailable}"
+					value="#{commentview.reviewcommentsDto.comment11}" />
+
+				<p:commandButton value="${msg.buttonNext}" icon="ui-icon-carat-1-e"
+					action="#{commentview.save}" update=":frmComments">
+				</p:commandButton>
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

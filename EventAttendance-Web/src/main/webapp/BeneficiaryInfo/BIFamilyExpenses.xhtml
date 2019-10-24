@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user"
+		value="#{averageFamilyExpView.userDetails.username}" />
+	<ui:define name="content">
+		<p:steps styleClass="custom"
+			activeIndex="#{averageFamilyExpView.uiMode=='new'?2:12}"
+			readonly="#{(averageFamilyExpView.uiMode=='new')}">
+			<p:menuitem value="${msg.identificationDetails}"
+				url="BIIdentificationInfo.xhtml?#{averageFamilyExpView.navParam}" />
+			<p:menuitem value="${msg.sociologicalInformation}"
+				url="BISocialogicalInfo.xhtml?#{averageFamilyExpView.navParam}" />
+			<p:menuitem value="${msg.averageFamilyExpenses}"
+				url="BIFamilyExpenses.xhtml?#{averageFamilyExpView.navParam}" />
+			<p:menuitem value="${msg.averageMonthlyIncome}"
+				url="BIMonthlyIncome.xhtml?#{averageFamilyExpView.navParam}" />
+			<p:menuitem value="${msg.savings}"
+				url="BISavings.xhtml?#{averageFamilyExpView.navParam}" />
+			<p:menuitem value="${msg.assets}"
+				url="BIAssets.xhtml?#{averageFamilyExpView.navParam}" />
+			<p:menuitem value="${msg.otherAssets}"
+				url="BIOtherAssets.xhtml?#{averageFamilyExpView.navParam}" />
+			<p:menuitem value="${msg.indebtedness}"
+				url="BIIndebitness.xhtml?#{averageFamilyExpView.navParam}" />
+			<p:menuitem value="${msg.house}"
+				url="BIHouse.xhtml?#{averageFamilyExpView.navParam}" />
+			<p:menuitem value="${msg.socialRelationship}"
+				url="BISocialRelationship.xhtml?#{averageFamilyExpView.navParam}" />
+			<p:menuitem value="${msg.otherInformation}"
+				url="BIOtherInfo.xhtml?#{averageFamilyExpView.navParam}" />
+			<p:menuitem value="${msg.comment}"
+				url="Comments.xhtml?#{averageFamilyExpView.navParam}" />
+		</p:steps>
+
+		<h:form id="frmfamilyExp">
+			<p:growl id="growl" showDetail="true" sticky="false" />
+			<h:panelGrid columns="2" cellpadding="10">
+				<h:outputText value="Total" />
+				<h:outputText id="outTotal" value="#{averageFamilyExpView.total}" />
+			</h:panelGrid>
+
+			<p:dataTable id="familyExp" var="familyExp"
+				value="#{averageFamilyExpView.averageFamilyExpenses}"
+				editable="true" rowStyleClass="highlight1">
+				<p:column headerText="${msg.fieldIndex}" width="10">
+					<h:outputLabel value="#{familyExp.expenditureCategory.code}" />
+				</p:column>
+				<p:column headerText="${msg.fieldExpCategory}" width="150">
+					<h:outputLabel value="#{familyExp.expenditureCategory.description}" />
+				</p:column>
+
+				<p:column headerText="${msg.fieldAmount}" width="50">
+					<p:inputText id="expenditure" value="#{familyExp.expenditure}"
+						style="width:100%;text-align:right;" 
+						validatorMessage="${validate.enterMonthlyExpenseAmount}"
+						readonly="#{!(averageFamilyExpView.uiMode=='new'||averageFamilyExpView.uiMode=='update')}">
+						<p:ajax event="blur" update=":frmfamilyExp:outTotal" />
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+			</p:dataTable>
+			<h:panelGrid columns="2">
+				<p:commandButton value="${msg.buttonNext}" icon="ui-icon-carat-1-e"
+					action="#{averageFamilyExpView.save}" update=":frmfamilyExp">
+				</p:commandButton>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

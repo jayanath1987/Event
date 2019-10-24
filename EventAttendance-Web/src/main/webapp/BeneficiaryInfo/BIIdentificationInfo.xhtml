@@ -1,0 +1,251 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<meta charset="utf-8" />
+
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user" value="#{identificationInfoView.userDetails.username}" />
+	<ui:param name="bean" value="#{identificationInfoView}" />
+	<ui:define name="content">
+		<p:steps  styleClass="custom" activeIndex="#{identificationInfoView.uiMode=='new'?0:12}" readonly="#{(identificationInfoView.uiMode=='new')}">
+			<p:menuitem value="${msg.identificationDetails}"
+				url="BIIdentificationInfo.xhtml?#{identificationInfoView.navParam}" />
+			<p:menuitem value="${msg.sociologicalInformation}"
+				url="BISocialogicalInfo.xhtml?#{identificationInfoView.navParam}" />
+			<p:menuitem value="${msg.averageFamilyExpenses}"
+				url="BIFamilyExpenses.xhtml?#{identificationInfoView.navParam}" />
+			<p:menuitem value="${msg.averageMonthlyIncome}"
+				url="BIMonthlyIncome.xhtml?#{identificationInfoView.navParam}" />
+			<p:menuitem value="${msg.savings}" url="BISavings.xhtml?#{identificationInfoView.navParam}" />
+			<p:menuitem value="${msg.assets}" url="BIAssets.xhtml?#{identificationInfoView.navParam}" />
+			<p:menuitem value="${msg.otherAssets}" url="BIOtherAssets.xhtml?#{identificationInfoView.navParam}" />
+			<p:menuitem value="${msg.indebtedness}" url="BIIndebitness.xhtml?#{identificationInfoView.navParam}" />
+			<p:menuitem value="${msg.house}" url="BIHouse.xhtml?#{identificationInfoView.navParam}" />
+			<p:menuitem value="${msg.socialRelationship}"
+				url="BISocialRelationship.xhtml?#{identificationInfoView.navParam}" />
+			<p:menuitem value="${msg.otherInformation}" url="BIOtherInfo.xhtml?#{identificationInfoView.navParam}" />
+			<p:menuitem value="${msg.comment}" url="Comments.xhtml?#{identificationInfoView.navParam}" />
+		</p:steps>
+		<script>
+			function convertToUpperCase(arg) {
+			    document.getElementById(arg).value = document.getElementById(arg).value.toUpperCase();
+			}
+		</script>
+		<h:form id="frmIdentificationDetails">
+			<p:growl id="growl" showDetail="true" sticky="false"
+				globalOnly="true" />
+			<h:panelGrid columns="3">
+
+				<p:outputLabel for="province" value="${msg.fieldProvince}" />
+				<p:selectOneMenu id="province" required="true" style="width:200px"
+					requiredMessage="${validate.selectProvince}"
+					value="#{identificationInfoView.provinceDto}"
+					converter="provinceConverter" effect="fade" var="p" filter="true"
+					filterMatchMode="startsWith"
+					disabled="#{!(identificationInfoView.uiMode=='new'||identificationInfoView.uiMode=='update')}">
+					<p:ajax listener="#{identificationInfoView.onProvinceChange}"
+						update="district,divisionalSec,divinagumaZone,gnd" />
+					<f:selectItem itemLabel="Select Province" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{identificationInfoView.provinceList}"
+						var="selectedProvince" itemLabel="#{selectedProvince.name}"
+						itemValue="#{selectedProvince}" />
+					<p:column>
+						<h:outputText value="#{p.name}" />
+					</p:column>
+				</p:selectOneMenu>
+
+				<p:message for="province" />
+
+				<p:outputLabel for="district" value="${msg.fieldDistrict}" />
+				<p:selectOneMenu id="district" required="true"
+					requiredMessage="${validate.selectDistrict}"
+					value="#{identificationInfoView.districtDto}"
+					converter="districtConverter" style="width:200px" effect="fade"
+					var="d" filter="true" filterMatchMode="startsWith"
+					disabled="#{!(identificationInfoView.uiMode=='new'||identificationInfoView.uiMode=='update')}">
+					<p:ajax listener="#{identificationInfoView.onDistrictChange}"
+						update="divisionalSec" />
+					<f:selectItem itemLabel="Select District" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{identificationInfoView.districtList}"
+						var="selectedDistrict" itemLabel="#{selectedDistrict.name}"
+						itemValue="#{selectedDistrict}" />
+					<p:column>
+						<h:outputText value="#{d.name}" />
+					</p:column>
+				</p:selectOneMenu>
+
+				<p:message for="district" />
+
+				<p:outputLabel for="divisionalSec" value="${msg.fieldDivisionalSec}" />
+				<p:selectOneMenu id="divisionalSec" required="true"
+					requiredMessage="${validate.selectDivisionalSec}"
+					value="#{identificationInfoView.divisionalSec}"
+					converter="dsdConverter" style="width:200px" effect="fade" var="d"
+					filter="true" filterMatchMode="startsWith"
+					disabled="#{!(identificationInfoView.uiMode=='new'||identificationInfoView.uiMode=='update')}">
+					<p:ajax
+						listener="#{identificationInfoView.onDivisionalSecListChange}"
+						update="divinagumaZone" />
+					<f:selectItem itemLabel="Select DS Division" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{identificationInfoView.divisionalSecList}"
+						var="selectedDSD" itemLabel="#{selectedDSD.name}"
+						itemValue="#{selectedDSD}" />
+					<p:column>
+						<h:outputText value="#{d.name}" />
+					</p:column>
+				</p:selectOneMenu>
+				<p:message for="divisionalSec" />
+
+				<p:outputLabel for="divinagumaZone"
+					value="${msg.fieldDivinagumaZone}" />
+				<p:selectOneMenu id="divinagumaZone" required="true"
+					requiredMessage="${validate.selectDivinagumaZone}"
+					value="#{identificationInfoView.divinagumaZone}"
+					converter="divinagumaZoneConverter" style="width:200px"
+					effect="fade" var="d" filter="true" filterMatchMode="startsWith"
+					disabled="#{!(identificationInfoView.uiMode=='new'||identificationInfoView.uiMode=='update')}">
+					<p:ajax
+						listener="#{identificationInfoView.onDivinagumaZoneListChange}"
+						update="gnd" />
+					<f:selectItem itemLabel="Select Divinaguma Zone" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{identificationInfoView.divinagumaZoneList}"
+						var="selectedDivinagumaZone"
+						itemLabel="#{selectedDivinagumaZone.name}"
+						itemValue="#{selectedDivinagumaZone}" />
+
+					<p:column>
+						<h:outputText value="#{d.name}" />
+					</p:column>
+				</p:selectOneMenu>
+				<p:message for="divinagumaZone" />
+
+				<p:outputLabel for="gnd" value="${msg.fieldGramaNiladariDivision}" />
+				<p:selectOneMenu id="gnd" required="true"
+					requiredMessage="${validate.selectGramaNiladariDivision}"
+					value="#{identificationInfoView.benefiaryDto.gndDto}"
+					converter="gndConverter" style="width:200px" effect="fade" var="g"
+					filter="true" filterMatchMode="startsWith"
+					disabled="#{!(identificationInfoView.uiMode=='new'||identificationInfoView.uiMode=='update')}">
+					<f:selectItem itemLabel="Select Grama Niladari Division"
+						itemValue="" noSelectionOption="true" />
+					<f:selectItems value="#{identificationInfoView.gndList}"
+						var="selectedGND" itemLabel="#{selectedGND.name}"
+						itemValue="#{selectedGND}" />
+					<p:column>
+						<h:outputText value="#{g.name}" />
+					</p:column>
+				</p:selectOneMenu>
+				<p:message for="gnd" />
+
+				<p:outputLabel for="status" value="${msg.fieldStatus}" />
+				<p:selectOneMenu id="status" required="true"
+					requiredMessage="${validate.selectStatus}"
+					value="#{identificationInfoView.benefiaryDto.status}"
+					converter="selectionCodeConverter" style="width:200px"
+					effect="fade" var="s"
+					disabled="#{!(identificationInfoView.uiMode=='new'||identificationInfoView.uiMode=='update')}">
+					<f:selectItem itemLabel="${msg.ddlSelect}" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{identificationInfoView.statusList}"
+						var="selectedStatus"
+						itemLabel="#{selectedStatus.code}-#{selectedStatus.description}"
+						itemValue="#{selectedStatus}" />
+
+					<p:column>
+						<h:outputText value="#{s.code}" />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{s.description}" />
+					</p:column>
+
+				</p:selectOneMenu>
+				<p:message for="status" />
+
+				<p:outputLabel for="familyUnitNo"
+					value="${msg.fieldFamilyUnitNumber}" />
+				<p:inputText id="familyUnitNo"
+					value="#{identificationInfoView.benefiaryDto.familyUnitNumber}"
+					style="width:215px" validatorMessage="${validate.enterNumbersOnly}"
+					readonly="#{!(identificationInfoView.uiMode=='new'||identificationInfoView.uiMode=='update')}">
+					<f:validateLongRange minimum="0" maximum="99999999999" />
+				</p:inputText>
+				<p:message for="familyUnitNo" />
+
+				<p:outputLabel for="fullName" value="${msg.fieldFullName}" />
+				<p:inputText id="fullName" required="true"
+					requiredMessage="${validate.enterFullName}" style="width:215px"
+					value="#{identificationInfoView.benefiaryDto.fullName}"
+					readonly="#{!(identificationInfoView.uiMode=='new'||identificationInfoView.uiMode=='update')}">
+					<p:ajax event="blur" update="fullName"
+						oncomplete="convertToUpperCase(this.source)" />
+				</p:inputText>
+				<p:message for="fullName" />
+				<p:outputLabel for="resAddressLine1"
+					value="${msg.fieldResidencialAddress}" />
+				<p:inputText id="resAddressLine1" required="true"
+					requiredMessage="${validate.enterResidentialAddress}"
+					value="#{identificationInfoView.benefiaryDto.resAddrsss.addressLine1}"
+					style="width:215px"
+					readonly="#{!(identificationInfoView.uiMode=='new'||identificationInfoView.uiMode=='update')}">
+					<p:ajax event="blur" update="resAddressLine1"
+						oncomplete="convertToUpperCase(this.source)" />
+				</p:inputText>
+				<p:message for="resAddressLine1" />
+
+				<p:outputLabel for="resAddressLine2" value=" " />
+				<p:inputText id="resAddressLine2"
+					value="#{identificationInfoView.benefiaryDto.resAddrsss.addressLine2}"
+					style="width:215px" valueChangeListener="#{bean.inputChanged}"
+					readonly="#{!(identificationInfoView.uiMode=='new'||identificationInfoView.uiMode=='update')}">
+					<p:ajax event="blur" update="resAddressLine2"
+						oncomplete="convertToUpperCase(this.source)" />
+				</p:inputText>
+				<p:message for="resAddressLine2" />
+
+				<p:outputLabel for="resAddressLine3" value=" " />
+				<p:inputText id="resAddressLine3"
+					value="#{identificationInfoView.benefiaryDto.resAddrsss.addressLine3}"
+					style="width:215px"
+					readonly="#{!(identificationInfoView.uiMode=='new'||identificationInfoView.uiMode=='update')}">
+					<p:ajax event="blur" update="resAddressLine3"
+						oncomplete="convertToUpperCase(this.source)" />
+				</p:inputText>
+				<p:message for="resAddressLine3" />
+
+				<p:outputLabel for="resTP" value="${msg.fieldResidencialTP}" />
+				<p:inputText id="resTP"
+					value="#{identificationInfoView.benefiaryDto.resTP}"
+					style="width:215px" validatorMessage="${validate.enterTPFormat}"
+					readonly="#{!(identificationInfoView.uiMode=='new'||identificationInfoView.uiMode=='update')}">
+					<f:validateRegex pattern="(^[0-9]{10}$)" />
+				</p:inputText>
+				<p:message for="resTP" />
+
+				<p:outputLabel for="mobileTP" value="${msg.fieldMobileTP}" />
+				<p:inputText id="mobileTP"
+					value="#{identificationInfoView.benefiaryDto.mobileTP}"
+					style="width:215px" validatorMessage="${validate.enterTPFormat}"
+					readonly="#{!(identificationInfoView.uiMode=='new'||identificationInfoView.uiMode=='update')}">
+					<f:validateRegex pattern="(^[0-9]{10}$)" />
+				</p:inputText>
+				<p:message for="mobileTP" />
+
+				<p:commandButton value="#{msg.buttonNext}"
+					update=":frmIdentificationDetails"
+					action="#{identificationInfoView.save}">
+				</p:commandButton>
+				<p:outputLabel value="" />
+				<p:outputLabel value="" />
+
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

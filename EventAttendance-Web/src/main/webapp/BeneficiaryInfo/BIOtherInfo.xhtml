@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user" value="#{otherInfoView.userDetails.username}" />
+	<ui:define name="content">
+		<p:steps styleClass="custom"
+			activeIndex="#{otherAssetsView.uiMode=='new'?10:12}"
+			readonly="#{(otherAssetsView.uiMode=='new')}">
+			<p:menuitem value="${msg.identificationDetails}"
+				url="BIIdentificationInfo.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.sociologicalInformation}"
+				url="BISocialogicalInfo.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.averageFamilyExpenses}"
+				url="BIFamilyExpenses.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.averageMonthlyIncome}"
+				url="BIMonthlyIncome.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.savings}"
+				url="BISavings.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.assets}"
+				url="BIAssets.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.otherAssets}"
+				url="BIOtherAssets.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.indebtedness}"
+				url="BIIndebitness.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.house}"
+				url="BIHouse.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.socialRelationship}"
+				url="BISocialRelationship.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.otherInformation}"
+				url="BIOtherInfo.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.comment}"
+				url="Comments.xhtml?#{otherAssetsView.navParam}" />
+		</p:steps>
+
+		<h:form id="frmOtherInfo">
+			<p:growl id="growl" showDetail="true" sticky="false" />
+
+			<p:dataTable id="proposalForEnhancementTable"
+				var="proposalForEnhancement"
+				value="#{otherInfoView.beneficiaryOtherInfoDto.proposalForEnhancement}"
+				editable="true" rowStyleClass="highlight1">
+				<p:column headerText="${msg.fieldIndex}" width="50">
+					<h:outputLabel value="#{proposalForEnhancement.description.code}" />
+				</p:column>
+				<p:column headerText="${msg.fieldProposalForEnhancement}">
+					<h:outputLabel
+						value="#{proposalForEnhancement.description.description}" />
+				</p:column>
+
+				<p:column headerText="">
+
+					<p:selectBooleanCheckbox id="selected"
+						value="#{proposalForEnhancement.selected}"
+						disabled="#{!(otherInfoView.uiMode=='new'||otherInfoView.uiMode=='update')}" />
+
+				</p:column>
+			</p:dataTable>
+
+			<h:panelGrid columns="3">
+
+				<p:outputLabel for="signedDate" value="${msg.fieldSignedDate}" />
+				<p:calendar showOn="button" id="signedDate" pattern="yyyy-MM-dd"
+					value="#{otherInfoView.beneficiaryOtherInfoDto.signedDate}"
+					style="width:215px" validatorMessage="${validate.enterNumbersOnly}"
+					disabled="#{!(otherInfoView.uiMode=='new'||otherInfoView.uiMode=='update')}">
+				</p:calendar>
+				<p:message for="signedDate" />
+
+				<p:outputLabel for="ariaManager" value="${msg.fieldAriaManager}" />
+				<p:inputText id="ariaManager"
+					value="#{otherInfoView.beneficiaryOtherInfoDto.ariaManager}"
+					style="width:215px"
+					readonly="#{!(otherInfoView.uiMode=='new'||otherInfoView.uiMode=='update')}">
+				</p:inputText>
+				<p:message for="ariaManager" />
+
+				<p:outputLabel for="provincialSecratariat"
+					value="${msg.fieldProvincialSecratariat}" />
+				<p:inputText id="provincialSecratariat"
+					value="#{otherInfoView.beneficiaryOtherInfoDto.provincialSecratariat}"
+					style="width:215px"
+					readonly="#{!(otherInfoView.uiMode=='new'||otherInfoView.uiMode=='update')}">
+				</p:inputText>
+				<p:message for="provincialSecratariat" />
+
+				<p:outputLabel for="headquartersManager"
+					value="${msg.fieldHeadquartersManager}" />
+				<p:inputText id="headquartersManager"
+					value="#{otherInfoView.beneficiaryOtherInfoDto.headquartersManager}"
+					style="width:215px"
+					readonly="#{!(otherInfoView.uiMode=='new'||otherInfoView.uiMode=='update')}">
+				</p:inputText>
+				<p:message for="headquartersManager" />
+
+				<p:outputLabel for="remarks" value="${msg.fieldRemarks}" />
+				<p:inputText id="remarks"
+					value="#{otherInfoView.beneficiaryOtherInfoDto.remarks}"
+					style="width:215px"
+					readonly="#{!(otherInfoView.uiMode=='new'||otherInfoView.uiMode=='update')}">
+				</p:inputText>
+				<p:message for="remarks" />
+
+
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+				<p:commandButton value="${msg.buttonNext}" icon="ui-icon-carat-1-e"
+					rendered="#{otherInfoView.uiMode=='new'||otherInfoView.uiMode=='update'}"
+					action="#{otherInfoView.save}" update=":frmOtherInfo">
+				</p:commandButton>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

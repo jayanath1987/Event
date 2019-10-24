@@ -1,0 +1,142 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user" value="#{otherAssetsView.userDetails.username}" />
+	<ui:define name="content">
+		<p:steps styleClass="custom"
+			activeIndex="#{otherAssetsView.uiMode=='new'?4:12}"
+			readonly="#{(otherAssetsView.uiMode=='new')}">
+			<p:menuitem value="${msg.identificationDetails}"
+				url="BIIdentificationInfo.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.sociologicalInformation}"
+				url="BISocialogicalInfo.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.averageFamilyExpenses}"
+				url="BIFamilyExpenses.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.averageMonthlyIncome}"
+				url="BIMonthlyIncome.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.savings}"
+				url="BISavings.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.assets}"
+				url="BIAssets.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.otherAssets}"
+				url="BIOtherAssets.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.indebtedness}"
+				url="BIIndebitness.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.house}"
+				url="BIHouse.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.socialRelationship}"
+				url="BISocialRelationship.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.otherInformation}"
+				url="BIOtherInfo.xhtml?#{otherAssetsView.navParam}" />
+
+			<p:menuitem value="${msg.comment}"
+				url="Comments.xhtml?#{averageFamilyExpView.navParam}" />
+
+		</p:steps>
+
+		<h:form id="frmSavings">
+			<p:growl id="growl" showDetail="true" sticky="true" />
+			<p:dataTable id="savings" var="savings"
+				value="#{savingsView.savings}" editable="true">
+				<p:column headerText="" width="6">
+					<p:commandButton disabled="#{savings.id!=0}" immediate="true"
+						actionListener="#{savingsView.removeItem(savings)}"
+						id="removeBtn" update=":frmSavings"
+						value="${msg.buttonRemove}"  />
+				</p:column>
+
+				<p:column headerText="${msg.fieldMemberName} (1)" width="150">
+					<p:outputLabel id="index" value="#{savings.member.name}"
+						style="width:100%;"
+						readonly="#{!(savingsView.uiMode=='new'||savingsView.uiMode=='update')}" />
+				</p:column>
+				<p:column headerText="${msg.fieldDivinaguma} (3)" width="20">
+					<p:inputText id="divinagumaBank" value="#{savings.divinagumaBank}"
+						style="width:100%;"
+						readonly="#{!(savingsView.uiMode=='new'||savingsView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+
+				<p:column headerText="${msg.fieldOtherBanks} (4)" width="50">
+					<p:inputText id="otherBanks" value="#{savings.otherBanks}"
+						style="width:100%;"
+						readonly="#{!(savingsView.uiMode=='new'||savingsView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+				<p:column headerText="${msg.fieldSmallGroup} (5)" width="50">
+					<p:inputText id="smallGroup" value="#{savings.smallGroup}"
+						style="width:100%;"
+						readonly="#{!(savingsView.uiMode=='new'||savingsView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+				<p:column headerText="${msg.fieldMandatorySavings} (6)" width="50">
+					<p:inputText id="mandatorySavings"
+						value="#{savings.mandatorySavings}" style="width:100%;"
+						readonly="#{!(savingsView.uiMode=='new'||savingsView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+				<p:column headerText="${msg.fieldCooperative} (7)" width="50">
+					<p:inputText id="cooperative" value="#{savings.cooperative}"
+						style="width:100%;"
+						readonly="#{!(savingsView.uiMode=='new'||savingsView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+				<p:column headerText="${msg.fieldLocalGroupSavings} (8)" width="50">
+					<p:inputText id="localGroupSavings"
+						value="#{savings.localGroupSavings}" style="width:100%;"
+						readonly="#{!(savingsView.uiMode=='new'||savingsView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+				<p:column headerText="${msg.fieldOther} (9)" width="50">
+					<p:inputText id="other" value="#{savings.other}"
+						style="width:100%;"
+						readonly="#{!(savingsView.uiMode=='new'||savingsView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+			</p:dataTable>
+
+			<h:panelGrid columns="2">
+				<p:commandButton value="${msg.buttonSelectMember}"
+					icon="ui-icon-plus" type="button"
+					disabled="#{!(savingsView.uiMode=='new'||savingsView.uiMode=='update')}"
+					onclick="PF('dialogMember').show();" />
+
+				<p:commandButton value="${msg.buttonNext}" icon="ui-icon-carat-1-e"
+					update=":frmSavings" action="#{savingsView.save}">
+				</p:commandButton>
+			</h:panelGrid>
+
+			<p:dialog header="${msg.headerAddMember}" widgetVar="dialogMember"
+				visible="#{savingsView.uiMode=='new'}" minHeight="40">
+				<h:panelGrid columns="1">
+					<p:pickList id="pickListMember"
+						converter="socialogicalInfoConverter"
+						value="#{savingsView.memberModel}" var="member"
+						itemLabel="#{member.name}" itemValue="#{member}" />
+
+					<p:commandButton update=":frmSavings" icon="ui-icon-ok" value="OK"  
+						actionListener="#{savingsView.addToItemList}"
+						oncomplete="PF('dialogMember').hide();" />
+				</h:panelGrid>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,239 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user" value="#{indebitnessView.userDetails.username}" />
+	<ui:define name="content">
+		<p:steps styleClass="custom"
+			activeIndex="#{indebitnessView.uiMode=='new'?7:12}"
+			readonly="#{(indebitnessView.uiMode=='new')}">
+			<p:menuitem value="${msg.identificationDetails}"
+				url="BIIdentificationInfo.xhtml?#{indebitnessView.navParam}" />
+			<p:menuitem value="${msg.sociologicalInformation}"
+				url="BISocialogicalInfo.xhtml?#{indebitnessView.navParam}" />
+			<p:menuitem value="${msg.averageFamilyExpenses}"
+				url="BIFamilyExpenses.xhtml?#{indebitnessView.navParam}" />
+			<p:menuitem value="${msg.averageMonthlyIncome}"
+				url="BIMonthlyIncome.xhtml?#{indebitnessView.navParam}" />
+			<p:menuitem value="${msg.savings}"
+				url="BISavings.xhtml?#{indebitnessView.navParam}" />
+			<p:menuitem value="${msg.assets}"
+				url="BIAssets.xhtml?#{indebitnessView.navParam}" />
+			<p:menuitem value="${msg.otherAssets}"
+				url="BIOtherAssets.xhtml?#{indebitnessView.navParam}" />
+			<p:menuitem value="${msg.indebtedness}"
+				url="BIIndebitness.xhtml?#{indebitnessView.navParam}" />
+			<p:menuitem value="${msg.house}"
+				url="BIHouse.xhtml?#{indebitnessView.navParam}" />
+			<p:menuitem value="${msg.socialRelationship}"
+				url="BISocialRelationship.xhtml?#{indebitnessView.navParam}" />
+			<p:menuitem value="${msg.otherInformation}"
+				url="BIOtherInfo.xhtml?#{indebitnessView.navParam}" />
+
+			<p:menuitem value="${msg.comment}"
+				url="Comments.xhtml?#{averageFamilyExpView.navParam}" />
+		</p:steps>
+		<h:form id="frmIndebitness">
+			<p:growl id="growl" showDetail="true" sticky="false"
+				globalOnly="false" />
+			<h:panelGrid columns="1" cellpadding="10">
+				<h:panelGrid columns="3" cellpadding="10">
+					<p:outputLabel>8.1</p:outputLabel>
+					<p:outputLabel>Is one of your family members indebited to person/institution</p:outputLabel>
+					<p:selectOneMenu id="indebited"
+						value="#{indebitnessView.indebited}"
+						converter="selectionCodeConverter" style="250px;" effect="fade"
+						var="s"
+						disabled="#{!(indebitnessView.uiMode=='new'||indebitnessView.uiMode=='update')}">
+
+
+						<f:selectItems value="#{indebitnessView.yesNoList}"
+							var="selectedStatus"
+							itemLabel="#{selectedStatus.code}-#{selectedStatus.description}"
+							itemValue="#{selectedStatus}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+				</h:panelGrid>
+				<p:panelGrid>
+					<p:dataTable id="tblIndebiness" var="indebitness"
+						value="#{indebitnessView.indebitNess}" editable="true">
+
+						<p:column headerText="" width="6">
+							<p:commandButton disabled="#{indebitness.id!=0}" immediate="true"
+								actionListener="#{indebitnessView.removeItem(indebitness)}"
+								id="removeBtn" update=":frmIndebitness" value="${msg.buttonRemove}" />
+						</p:column>
+
+						<p:column headerText="${msg.fieldMemberName} (1)" width="200">
+							<p:outputLabel value="#{indebitness.member.name}"
+								style="width:80%;" />
+						</p:column>
+
+						<p:column headerText="${msg.fieldReasonForBurrowing} (3)"
+							width="100">
+							<p:selectOneMenu id="reasonForBurrowing"
+								value="#{indebitness.reasonForBurrowing}" style="width:80%;"
+								converter="selectionCodeConverter" effect="fade" var="s"
+								required="true" requiredMessage="${validate.selectDDLs}"
+								filter="true" filterMatchMode="startsWith"
+								disabled="#{!(indebitnessView.uiMode=='new'||indebitnessView.uiMode=='update')}">
+								<f:selectItems value="#{indebitnessView.commonList}"
+									var="selectedCommon" itemLabel="#{selectedCommon.code}"
+									itemValue="#{selectedCommon}" />
+								<f:selectItems value="#{indebitnessView.reasonForBurrowingList}"
+									var="selectedReasonForBurrowing"
+									itemLabel="#{selectedReasonForBurrowing.code}"
+									itemValue="#{selectedReasonForBurrowing}" />
+								<p:column>
+									<h:outputText value="#{s.code}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{s.description}" />
+								</p:column>
+							</p:selectOneMenu>
+						</p:column>
+
+						<p:column headerText="${msg.fielldLender} (4)" width="100">
+							<p:selectOneMenu id="lender" value="#{indebitness.lender}"
+								style="width:75%;" converter="selectionCodeConverter"
+								effect="fade" var="s" filter="true" filterMatchMode="startsWith"
+								disabled="#{!(indebitnessView.uiMode=='new'||indebitnessView.uiMode=='update')}">
+								<f:selectItems value="#{indebitnessView.commonList}"
+									var="selectedCommon" itemLabel="#{selectedCommon.code}"
+									itemValue="#{selectedCommon}" />
+								<f:selectItems value="#{indebitnessView.lenderList}"
+									var="selectedLender" itemLabel="#{selectedLender.code}"
+									itemValue="#{selectedLender}" />
+								<p:column>
+									<h:outputText value="#{s.code}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{s.description}" />
+								</p:column>
+							</p:selectOneMenu>
+						</p:column>
+
+						<p:column headerText="${msg.fieldAmount} (5)" width="100">
+							<p:inputText id="amount" value="#{indebitness.amount}"
+								validatorMessage="#{validate.enterValidFormat}"
+								readonly="#{!(indebitnessView.uiMode=='new'||indebitnessView.uiMode=='update')}"
+								style="width:75%;">
+								<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+)$" />
+							</p:inputText>
+						</p:column>
+						<p:column headerText="${msg.fieldAnnualInterestRate} (6)"
+							width="100">
+							<p:inputText id="anualInterstRate"
+								value="#{indebitness.anualInterstRate}"
+								validatorMessage="#{validate.enterValidFormat}"
+								readonly="#{!(indebitnessView.uiMode=='new'||indebitnessView.uiMode=='update')}"
+								style="width:75%">
+								<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+)$" />
+							</p:inputText>
+						</p:column>
+						<p:column headerText="${msg.fieldInstallment} (7)" width="100">
+							<p:inputText id="installment" value="#{indebitness.installment}"
+								validatorMessage="#{validate.enterValidFormat}"
+								readonly="#{!(indebitnessView.uiMode=='new'||indebitnessView.uiMode=='update')}"
+								style="width:75%">
+								<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+)$" />
+							</p:inputText>
+						</p:column>
+						<f:selectItems value="#{indebitnessView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<p:column headerText="${msg.fieldOutstandingDate}(8)" width="100">
+							<p:inputText id="outstandingDate"
+								value="#{indebitness.outstandingAmount}"
+								validatorMessage="#{validate.enterValidFormat}"
+								readonly="#{!(indebitnessView.uiMode=='new'||indebitnessView.uiMode=='update')}"
+								style="width:75%">
+								<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+)$" />
+							</p:inputText>
+						</p:column>
+						<p:column headerText="${msg.fieldMethodOfReplacement} (9)"
+							width="100">
+							<p:selectOneMenu id="methodOfReplacement"
+								value="#{indebitness.methodOfReplacement}" style="width:75%;"
+								converter="selectionCodeConverter" effect="fade" var="s"
+								filter="true" filterMatchMode="startsWith"
+								disabled="#{!(indebitnessView.uiMode=='new'||indebitnessView.uiMode=='update')}">
+								<f:selectItems value="#{indebitnessView.commonList}"
+									var="selectedCommon" itemLabel="#{selectedCommon.code}"
+									itemValue="#{selectedCommon}" />
+								<f:selectItems value="#{indebitnessView.replacementList}"
+									var="selectedreplacement"
+									itemLabel="#{selectedreplacement.code}"
+									itemValue="#{selectedreplacement}" />
+								<p:column>
+									<h:outputText value="#{s.code}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{s.description}" />
+								</p:column>
+							</p:selectOneMenu>
+						</p:column>
+
+						<p:column headerText="${msg.fieldIsLoanoverdue} (10)" width="100">
+							<p:selectOneMenu id="overdue" value="#{indebitness.loanOverdue}"
+								style="width:75%;" converter="selectionCodeConverter"
+								effect="fade" var="s" filter="true" filterMatchMode="startsWith"
+								disabled="#{!(indebitnessView.uiMode=='new'||indebitnessView.uiMode=='update')}">
+								<f:selectItems value="#{indebitnessView.commonList}"
+									var="selectedCommon" itemLabel="#{selectedCommon.code}"
+									itemValue="#{selectedCommon}" />
+								<f:selectItems value="#{indebitnessView.yesNoList}"
+									var="selectedStatus" itemLabel="#{selectedStatus.code}"
+									itemValue="#{selectedStatus}" />
+								<p:column>
+									<h:outputText value="#{s.code}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{s.description}" />
+								</p:column>
+							</p:selectOneMenu>
+						</p:column>
+
+					</p:dataTable>
+				</p:panelGrid>
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<p:commandButton value="${msg.buttonSelectMember}"
+					icon="ui-icon-plus" type="button"
+					disabled="#{!(indebitnessView.uiMode=='new'||indebitnessView.uiMode=='update')}"
+					onclick="PF('dialogMember').show();" />
+
+				<p:commandButton value="${msg.buttonNext}" icon="ui-icon-carat-1-e"
+					update=":frmIndebitness" action="#{indebitnessView.save}">
+
+				</p:commandButton>
+			</h:panelGrid>
+
+			<p:dialog header="${msg.headerAddMember}" widgetVar="dialogMember"
+				visible="#{indebitnessView.uiMode=='new'}" minHeight="40">
+				<h:panelGrid columns="1">
+					<p:pickList id="pickListMember"
+						converter="socialogicalInfoConverter"
+						value="#{indebitnessView.memberModel}" var="member"
+						itemLabel="#{member.name}" itemValue="#{member}" />
+
+					<p:commandButton update=":frmIndebitness" icon="ui-icon-ok"
+						value="${msg.btnOKAddRowDialog}"
+						actionListener="#{indebitnessView.addToItemList}"
+						oncomplete="PF('dialogMember').hide();" />
+				</h:panelGrid>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

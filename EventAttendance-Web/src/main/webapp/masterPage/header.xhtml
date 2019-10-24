@@ -1,0 +1,165 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<p:tabView id="tabView" style="background-color:#EFFCEF;">
+
+	<p:tab id="tabReg" title="Registration">
+		<p:toolbar>
+			<p:toolbarGroup align="left">
+				<a href="../location/location.xhtml"> <p:commandButton
+						type="button" value="Location" icon="ui-icon-document" />
+				</a>
+				<p:separator />
+				<a href="../item/item.xhtml"> <p:commandButton type="button"
+						value="Item" icon="ui-icon-folder-open" />
+				</a>
+				<a href="../ItemProductRegistration/itemProductionRegistration.xhtml"> <p:commandButton type="button"
+						value="Production Items" icon="ui-icon-folder-open" />
+				</a>
+				<p:separator />
+				<a href="../customer/customer.xhtml"> <p:commandButton
+						type="button" value="Customers" icon="ui-icon-folder-open" />
+				</a>
+				<a href="../supplier/supplier.xhtml"> <p:commandButton
+						type="button" value="Suppliers" icon="ui-icon-folder-open" />
+				</a>
+			</p:toolbarGroup>
+
+			<p:toolbarGroup align="right">
+				<a href="../stockHandleDocuemnts/pendingApproval.xhtml"><p:commandButton
+						type="button" value="Pending Approval" icon="ui-icon-folder-open" /></a>
+				<a href="../logoutSession.xhtml"><p:commandButton type="button"
+						value="Log Out" icon="ui-icon-folder-open" /></a>
+			</p:toolbarGroup>
+
+		</p:toolbar>
+	</p:tab>
+
+	<p:tab id="tabInventory" title="Inventory">
+		<p:toolbar>
+			<p:toolbarGroup align="left">
+				<a href="../grn/grn.xhtml"> <p:commandButton type="button"
+						value="GRN" icon="ui-icon-document" />
+				</a>
+				<a href="../LocationTrasfer/LocationTransfer.xhtml"> <p:commandButton
+						type="button" value="Location Transfer" icon="ui-icon-document" />
+				</a>
+				<p:separator />
+				<a href="../dispach/dispach.xhtml"> <p:commandButton
+						type="button" value="Dispatch" icon="ui-icon-folder-open" />
+				</a>
+				<a href="../damage/damage.xhtml"> <p:commandButton type="button"
+						value="Damage Notes" icon="ui-icon-folder-open" />
+				</a>
+			</p:toolbarGroup>
+
+			<p:toolbarGroup align="right">
+				<a href="../stockHandleDocuemnts/pendingApproval.xhtml"><p:commandButton
+						type="button" value="Pending Approval" icon="ui-icon-folder-open" /></a>
+				<a href="../logoutSession.xhtml"><p:commandButton type="button"
+						value="Log Out" icon="ui-icon-folder-open" /></a>
+			</p:toolbarGroup>
+
+		</p:toolbar>
+	</p:tab>
+
+	<p:tab id="tabPlantation" title="Plantation">
+		<p:toolbar>
+			<p:toolbarGroup align="left">
+				<a href="../schedule/schedule.xhtml"> <p:commandButton
+						type="button" value="Schedule" icon="ui-icon-document" />
+				</a>
+				<a href="../plantation/plantation.xhtml"> <p:commandButton
+						type="button" value="Plantation" icon="ui-icon-document" />
+				</a>
+				<a href="../plan/plan.xhtml"> <p:commandButton
+						type="button" value="Plan" icon="ui-icon-document" />
+				</a>
+				<a href="../scouting/souting.xhtml"> <p:commandButton
+						type="button" value="Scouting" icon="ui-icon-document" />
+				</a>
+				<a href="../cutting/cutting.xhtml"> <p:commandButton
+						type="button" value="Cutting" icon="ui-icon-document" />
+				</a>
+				<a href="../harvest/harvest.xhtml"> <p:commandButton
+						type="button" value="Harvest" icon="ui-icon-document" />
+				</a>
+				<a href="../flowerCategory/flowerCategory.xhtml"> <p:commandButton
+						type="button" value="Flower Category" icon="ui-icon-document" />
+				</a>
+
+			</p:toolbarGroup>
+
+			<p:toolbarGroup align="right">
+				<a href="../logoutSession.xhtml"><p:commandButton type="button"
+						value="Log Out" icon="ui-icon-folder-open" /></a>
+			</p:toolbarGroup>
+
+		</p:toolbar>
+	</p:tab>
+	
+	<p:tab id="tabAgreements" title="Agreements">
+		<p:toolbar>
+			<p:toolbarGroup align="left">
+				<a href="../agreement/agreement.xhtml"> <p:commandButton
+						type="button" value="Agreement" icon="ui-icon-document" />
+				</a>
+			</p:toolbarGroup>
+
+			<p:toolbarGroup align="right">
+			<a href="../stockHandleDocuemnts/pendingApproval.xhtml"><p:commandButton
+						type="button" value="Pending Approval" icon="ui-icon-folder-open" /></a>
+				<a href="../logoutSession.xhtml"><p:commandButton type="button"
+						value="Log Out" icon="ui-icon-folder-open" /></a>
+			</p:toolbarGroup>
+
+		</p:toolbar>
+	</p:tab>
+	
+	<p:tab id="tabPayments" title="Payments">
+		<p:toolbar>
+			<p:toolbarGroup align="left">
+				<a href="../invoice/invoice.xhtml"> <p:commandButton
+						type="button" value="Invoice" icon="ui-icon-document" />
+				</a>
+				<a href="../invoicePayment/invoicePayment.xhtml"> <p:commandButton
+						type="button" value="Invoice Payments" icon="ui-icon-document" />
+				</a>
+
+			</p:toolbarGroup>
+
+			<p:toolbarGroup align="right">
+			<a href="../stockHandleDocuemnts/pendingApproval.xhtml"><p:commandButton
+						type="button" value="Pending Approval" icon="ui-icon-folder-open" /></a>
+				<a href="../logoutSession.xhtml"><p:commandButton type="button"
+						value="Log Out" icon="ui-icon-folder-open" /></a>
+			</p:toolbarGroup>
+
+		</p:toolbar>
+	</p:tab>
+
+	<p:tab id="tabReports" title="Reports">
+		<p:toolbar>
+			<p:toolbarGroup align="left">
+
+				<a href="../stock/stockForLocation.xhtml"> <p:commandButton
+						type="button" value="Stock" icon="ui-icon-document" />
+				</a>
+				<a href="../cutting/summaryPropagationReport.xhtml"> <p:commandButton
+						type="button" value="Reports" icon="ui-icon-document" />
+				</a>
+			</p:toolbarGroup>
+
+			<p:toolbarGroup align="right">
+				<a href="../stockHandleDocuemnts/pendingApproval.xhtml"><p:commandButton
+						type="button" value="Pending Approval" icon="ui-icon-folder-open" /></a>
+				<a href="../logoutSession.xhtml"><p:commandButton type="button"
+						value="Log Out" icon="ui-icon-folder-open" /></a>
+			</p:toolbarGroup>
+		</p:toolbar>
+	</p:tab>
+</p:tabView>
+</html>

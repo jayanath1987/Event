@@ -1,0 +1,467 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user" value="#{houseView.userDetails.username}" />
+	<ui:define name="content">
+		<p:steps styleClass="custom"
+			activeIndex="#{houseView.uiMode=='new'?8:12}"
+			readonly="#{(houseView.uiMode=='new')}">
+			<p:menuitem value="${msg.identificationDetails}"
+				url="BIIdentificationInfo.xhtml?#{houseView.navParam}" />
+			<p:menuitem value="${msg.sociologicalInformation}"
+				url="BISocialogicalInfo.xhtml?#{houseView.navParam}" />
+			<p:menuitem value="${msg.averageFamilyExpenses}"
+				url="BIFamilyExpenses.xhtml?#{houseView.navParam}" />
+			<p:menuitem value="${msg.averageMonthlyIncome}"
+				url="BIMonthlyIncome.xhtml?#{houseView.navParam}" />
+			<p:menuitem value="${msg.savings}"
+				url="BISavings.xhtml?#{houseView.navParam}" />
+			<p:menuitem value="${msg.assets}"
+				url="BIAssets.xhtml?#{houseView.navParam}" />
+			<p:menuitem value="${msg.otherAssets}"
+				url="BIOtherAssets.xhtml?#{houseView.navParam}" />
+			<p:menuitem value="${msg.indebtedness}"
+				url="BIIndebitness.xhtml?#{houseView.navParam}" />
+			<p:menuitem value="${msg.house}"
+				url="BIHouse.xhtml?#{houseView.navParam}" />
+			<p:menuitem value="${msg.socialRelationship}"
+				url="BISocialRelationship.xhtml?#{houseView.navParam}" />
+			<p:menuitem value="${msg.otherInformation}"
+				url="BIOtherInfo.xhtml?#{houseView.navParam}" />
+			<p:menuitem value="${msg.comment}"
+				url="Comments.xhtml?#{houseView.navParam}" />
+		</p:steps>
+
+		<h:form id="frmHouse">
+			<p:growl id="growl" showDetail="true" sticky="false"
+				globalOnly="false" />
+			<h:panelGrid columns="1" cellpadding="10">
+				<h:panelGrid columns="3" cellpadding="10">
+					<p:outputLabel>9.1</p:outputLabel>
+					<p:outputLabel>${msg.fieldNatureOfTheUnit}</p:outputLabel>
+					<p:selectOneMenu id="natureOfTheUnit"
+						value="#{houseView.houseDto.houseNatureUnit}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems value="#{houseView.natureOfUnitList}"
+							var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+
+					<p:outputLabel>9.2</p:outputLabel>
+					<p:outputLabel>${msg.filedBedroomsCount}</p:outputLabel>
+					<p:inputText id="bedRoomCount"
+						validatorMessage="#{validate.enterValidFormat}"
+						value="#{houseView.houseDto.bedRoomCount}" style="width:100%;"
+						readonly="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+					</p:inputText>
+
+					<p:outputLabel>9.3</p:outputLabel>
+					<p:outputLabel>${msg.filedFlowAria}</p:outputLabel>
+					<p:selectOneMenu id="houseFloorAria"
+						value="#{houseView.houseDto.houseFloorAria}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+
+						<f:selectItems value="#{houseView.flowAriaList}" var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+					<p:outputLabel>9.4</p:outputLabel>
+					<p:outputLabel>${msg.fieldConstructionMetirials}</p:outputLabel>
+					<p:outputLabel></p:outputLabel>
+
+					<p:outputLabel>A</p:outputLabel>
+					<p:outputLabel>${msg.fieldWalls}</p:outputLabel>
+					<p:selectOneMenu id="wall" value="#{houseView.houseDto.wall}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems value="#{houseView.wallMetirialList}"
+							var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+
+					<p:outputLabel>B</p:outputLabel>
+					<p:outputLabel>${msg.fieldFloor}</p:outputLabel>
+					<p:selectOneMenu id="floor" value="#{houseView.houseDto.floor}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems value="#{houseView.flowMetirialList}"
+							var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+
+					<p:outputLabel>C</p:outputLabel>
+					<p:outputLabel>${msg.fieldRoof}</p:outputLabel>
+					<p:selectOneMenu id="roof" value="#{houseView.houseDto.roof}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems value="#{houseView.roofMetirialList}"
+							var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+
+					<p:outputLabel>9.5</p:outputLabel>
+					<p:outputLabel>${msg.fieldNatureOfOwnership}</p:outputLabel>
+					<p:selectOneMenu id="ownershipNature" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						value="#{houseView.houseDto.ownershipNature}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+
+						<f:selectItems value="#{houseView.natureOfOwnershipList}"
+							var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+
+					<p:outputLabel>9.6</p:outputLabel>
+					<p:outputLabel>${msg.fieldMainDrinkingSource}</p:outputLabel>
+					<p:selectOneMenu id="mainSource" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						value="#{houseView.houseDto.mainSource}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+
+						<f:selectItems value="#{houseView.mainDrinkingSourceList}"
+							var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+
+					<p:outputLabel>9.7</p:outputLabel>
+					<p:outputLabel>${msg.fieldToiletFacility}</p:outputLabel>
+					<p:selectOneMenu id="toiletFacilities" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						value="#{houseView.houseDto.toiletFacilities}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+
+						<f:selectItems value="#{houseView.toiletList}" var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+
+					<p:outputLabel>9.7.B</p:outputLabel>
+					<p:outputLabel>${msg.fieldNatureOfToilet}</p:outputLabel>
+					<p:selectOneMenu id="natureOfToilet" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						value="#{houseView.houseDto.natureOfToilet}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+
+						<f:selectItems value="#{houseView.natureOfTheToiletList}"
+							var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+
+					<p:outputLabel>9.8</p:outputLabel>
+					<p:outputLabel>${msg.fieldMainLightingSystem}</p:outputLabel>
+					<p:selectOneMenu id="mainlightingSystem" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						value="#{houseView.houseDto.mainlightingSystem}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+
+						<f:selectItems value="#{houseView.mainLightingList}"
+							var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+
+					<p:outputLabel>9.9</p:outputLabel>
+					<p:outputLabel>${msg.fieldMainPowerSource}</p:outputLabel>
+					<p:selectOneMenu id="mainPowerSourceOfCooking" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						value="#{houseView.houseDto.mainPowerSourceOfCooking}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+
+						<f:selectItems value="#{houseView.cookingSourceList}"
+							var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+
+					<p:outputLabel>9.10</p:outputLabel>
+					<p:outputLabel>${msg.fieldMealCount}</p:outputLabel>
+					<p:selectOneMenu id="mealsTaking"
+						value="#{houseView.houseDto.mealsTaking}" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+
+						<f:selectItems value="#{houseView.mealCountsList}" var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+
+					<p:outputLabel>9.11</p:outputLabel>
+					<p:outputLabel>${msg.fieldBuyMeat}</p:outputLabel>
+					<p:selectOneMenu id="abilityToBuyMeat" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						value="#{houseView.houseDto.abilityToBuyMeat}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+
+						<f:selectItems value="#{houseView.yesNoList}" var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+
+					<p:outputLabel>9.12</p:outputLabel>
+					<p:outputLabel>${msg.fieldBuyCloths}</p:outputLabel>
+					<p:selectOneMenu id="ableToBuyCloths"
+						value="#{houseView.houseDto.ableToBuyCloths}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+
+						<f:selectItems value="#{houseView.yesNoList}" var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+
+					<p:outputLabel>9.13</p:outputLabel>
+					<p:outputLabel>${msg.fieldPrivateMedicine}</p:outputLabel>
+					<p:selectOneMenu id="ableToTakePrivateMedicine"
+						value="#{houseView.houseDto.ableToTakePrivateMedicine}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+
+						<f:selectItems value="#{houseView.yesNoList}" var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+
+					<p:outputLabel>9.14</p:outputLabel>
+					<p:outputLabel>${msg.fieldProtectedWall}</p:outputLabel>
+					<p:selectOneMenu id="houseProtectedParapetWall"
+						value="#{houseView.houseDto.houseProtectedParapetWall}"
+						converter="selectionCodeConverter" style="width:100%;"
+						effect="fade" var="s" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						disabled="#{!(houseView.uiMode=='new'||houseView.uiMode=='update')}">
+						<f:selectItems value="#{houseView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+
+						<f:selectItems value="#{houseView.yesNoList}" var="selected"
+							itemLabel="#{selected.code}-#{selected.description}"
+							itemValue="#{selected}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+					</p:selectOneMenu>
+
+					<h:outputText value="" />
+
+					<p:commandButton value="${msg.buttonNext}" icon="ui-icon-carat-1-e"
+						action="#{houseView.save}" update=":frmHouse">
+					</p:commandButton>
+					<h:outputText value="" />
+
+				</h:panelGrid>
+			</h:panelGrid>
+		</h:form>`
+	</ui:define>
+</ui:composition>
+</html>

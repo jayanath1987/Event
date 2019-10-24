@@ -1,0 +1,35 @@
+.ui-layout-north {
+	z-index: 20 !important;
+	overflow: visible !important;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+	overflow: visible !important;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 13px !important;
+}
+
+.alignTop {
+	vertical-align: top;
+	width: 50%;
+}
+
+.ui-panelgrid td, .ui-panelgrid tr {
+	border-style: none !important;
+}
+
+.ui-steps .ui-steps-title{
+	font-size:8px;
+}
+.ui-steps .ui-steps-number{
+	font-size:120%;
+
+	}
+
+body {
+	background-color: #0081c2;
+}
+
+

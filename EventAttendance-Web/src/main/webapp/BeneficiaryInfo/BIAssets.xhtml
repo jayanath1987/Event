@@ -1,0 +1,450 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user" value="#{assetsView.userDetails.username}" />
+	<ui:define name="content">
+		<p:steps styleClass="custom"
+			activeIndex="#{assetsView.uiMode=='new'?5:12}"
+			readonly="#{(assetsView.uiMode=='new')}">
+			<p:menuitem value="${msg.identificationDetails}"
+				url="BIIdentificationInfo.xhtml?#{assetsView.navParam}" />
+			<p:menuitem value="${msg.sociologicalInformation}"
+				url="BISocialogicalInfo.xhtml?#{assetsView.navParam}" />
+			<p:menuitem value="${msg.averageFamilyExpenses}"
+				url="BIFamilyExpenses.xhtml?#{assetsView.navParam}" />
+			<p:menuitem value="${msg.averageMonthlyIncome}"
+				url="BIMonthlyIncome.xhtml?#{assetsView.navParam}" />
+			<p:menuitem value="${msg.savings}"
+				url="BISavings.xhtml?#{assetsView.navParam}" />
+			<p:menuitem value="${msg.assets}"
+				url="BIAssets.xhtml?#{assetsView.navParam}" />
+			<p:menuitem value="${msg.otherAssets}"
+				url="BIOtherAssets.xhtml?#{assetsView.navParam}" />
+			<p:menuitem value="${msg.indebtedness}"
+				url="BIIndebitness.xhtml?#{assetsView.navParam}" />
+			<p:menuitem value="${msg.house}"
+				url="BIHouse.xhtml?#{assetsView.navParam}" />
+			<p:menuitem value="${msg.socialRelationship}"
+				url="BISocialRelationship.xhtml?#{assetsView.navParam}" />
+			<p:menuitem value="${msg.otherInformation}"
+				url="BIOtherInfo.xhtml?#{assetsView.navParam}" />
+			<p:menuitem value="${msg.comment}"
+				url="BIOtherInfo.xhtml?#{assetsView.navParam}" />
+
+
+		</p:steps>
+		<h:form id="frmAsessts">
+			<p:growl id="growl" showDetail="true" sticky="false" />
+			<p:panel id="resHome" header="${msg.headerResHome}">
+				<h:panelGrid columns="1" cellpadding="10">
+					<h:panelGrid columns="3" cellpadding="10">
+						<p:outputLabel>6.1</p:outputLabel>
+						<p:outputLabel>${msg.fieldResHouseBelongsToFamily}</p:outputLabel>
+						<p:selectOneMenu id="resHouseBelongsToFamily"
+							update=":frmAsessts:pnlTableResHome"
+							value="#{assetsView.assetsOfFamily.resHouseBelongsToFamily}"
+							converter="selectionCodeConverter" style="width:50px"
+							effect="fade" var="s"
+							disabled="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}">
+							<p:ajax update="pnlTableResHome" />
+							<f:selectItems value="#{assetsView.yesNoList}"
+								var="selectedStatus"
+								itemLabel="#{selectedStatus.code}-#{selectedStatus.description}"
+								itemValue="#{selectedStatus}" />
+
+							<p:column>
+								<h:outputText value="#{s.code}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{s.description}" />
+							</p:column>
+
+						</p:selectOneMenu>
+					</h:panelGrid>
+
+					<p:panelGrid id="pnlTableResHome">
+
+						<f:facet name="header">
+							<p:row
+								rendered="#{assetsView.assetsOfFamily.resHouseBelongsToFamily.id==227||assetsView.assetsOfFamily.resHouseBelongsToFamily.id==0}">
+								<p:column colspan="3">${msg.fieldResHouseBelongsToFamily}</p:column>
+								<p:column rowspan="2">${msg.fieldMarketValue}</p:column>
+
+							</p:row>
+							<p:row
+								rendered="#{assetsView.assetsOfFamily.resHouseBelongsToFamily.id==227||assetsView.assetsOfFamily.resHouseBelongsToFamily.id==0}">
+								<p:column>${msg.fieldAcres}</p:column>
+								<p:column>${msg.fieldRoods}</p:column>
+								<p:column>${msg.fieldPurch}</p:column>
+
+							</p:row>
+
+						</f:facet>
+						<p:row
+							rendered="#{assetsView.assetsOfFamily.resHouseBelongsToFamily.id==227||assetsView.assetsOfFamily.resHouseBelongsToFamily.id==0}">
+							<p:column>
+								<p:inputText id="resHomeAcres"
+									value="#{assetsView.assetsOfFamily.resHouse.acres}"
+									style="width:100%;"
+									validatorMessage="${validate.enterMonthlyExpenseAmount}"
+									readonly="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}">
+									<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+								</p:inputText>
+							</p:column>
+							<p:column>
+								<p:inputText id="resHomeRoods"
+									value="#{assetsView.assetsOfFamily.resHouse.roods}"
+									style="width:100%;"
+									validatorMessage="${validate.enterMonthlyExpenseAmount}"
+									readonly="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}">
+									<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+								</p:inputText>
+							</p:column>
+							<p:column>
+								<p:inputText id="resHomePurch"
+									value="#{assetsView.assetsOfFamily.resHouse.purch}"
+									style="width:100%;"
+									validatorMessage="${validate.enterMonthlyExpenseAmount}"
+									readonly="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}">
+									<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+								</p:inputText>
+							</p:column>
+							<p:column>
+								<p:inputText id="resHomeMarketValue"
+									value="#{assetsView.assetsOfFamily.resHouse.marketValue}"
+									style="width:100%;"
+									validatorMessage="${validate.enterMonthlyExpenseAmount}"
+									readonly="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}">
+									<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+								</p:inputText>
+							</p:column>
+
+						</p:row>
+					</p:panelGrid>
+				</h:panelGrid>
+			</p:panel>
+
+
+			<p:panel id="otherHouseAndBuildings"
+				header="${msg.headerOtherAssestsAndBuilding}">
+				<h:panelGrid columns="1" cellpadding="10">
+					<h:panelGrid columns="3" cellpadding="10">
+						<p:outputLabel>6.2.1</p:outputLabel>
+						<p:outputLabel>${msg.fieldOtherAssestsBelongs}</p:outputLabel>
+						<p:selectOneMenu id="homeAndBuildingsAvailable"
+							value="#{assetsView.assetsOfFamily.homeAndBuildingsAvailable}"
+							converter="selectionCodeConverter" style="width:50px"
+							effect="fade" var="s"
+							disabled="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}">
+
+							<f:selectItems value="#{assetsView.yesNoList}"
+								var="selectedStatus"
+								itemLabel="#{selectedStatus.code}-#{selectedStatus.description}"
+								itemValue="#{selectedStatus}" />
+
+							<p:column>
+								<h:outputText value="#{s.code}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{s.description}" />
+							</p:column>
+
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<p:panelGrid>
+						<p:commandButton value="${msg.buttonSelectMember}"
+							icon="ui-icon-plus" type="button"
+							onclick="PF('dialogMemberOtherHouseAndBuildings').show();" />
+
+						<p:dataTable id="tblOtherHouseAndBuildings" var="otherHouse"
+							value="#{assetsView.assetsOfFamily.homeAndBuildings}"
+							editable="true">
+
+							<p:column headerText="" width="6">
+								<p:commandButton disabled="#{otherHouse.id!=0}" immediate="true"
+									actionListener="#{assetsView.removeItemOtherHouseAndBuilnding(otherHouse)}"
+									id="removeBtn" update=":frmAsessts" value="${msg.buttonRemove}" />
+							</p:column>
+
+							<p:column headerText="${msg.headerMember}" width="50">
+
+								<h:outputLabel value="#{otherHouse.member.name}" />
+							</p:column>
+
+							<p:column headerText="${msg.fieldNatureOfOwnership}">
+								<p:selectOneMenu id="natureOfOwnership"
+									value="#{otherHouse.natureOfOwnership}" style="width:80px;"
+									converter="selectionCodeConverter" effect="fade" var="s"
+									filter="true" filterMatchMode="startsWith"
+									disabled="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}">
+									<f:selectItems value="#{assetsView.natureOfOwnershipHomeList}"
+										var="selectedOwnership" itemLabel="#{selectedOwnership.code}"
+										itemValue="#{selectedOwnership}" />
+									<p:column>
+										<h:outputText value="#{s.code}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{s.description}" />
+									</p:column>
+								</p:selectOneMenu>
+							</p:column>
+							<p:column headerText="${msg.fieldMarketValue}" width="50">
+								<p:inputText id="slin" value="#{otherHouse.marketValue}"
+									validatorMessage="${validate.enterMonthlyExpenseAmount}"
+									readonly="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}"
+									style="width:100%">
+									<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+								</p:inputText>
+							</p:column>
+						</p:dataTable>
+					</p:panelGrid>
+				</h:panelGrid>
+
+			</p:panel>
+			<p:panel id="uplands" header="${msg.headerUpLands}">
+				<h:panelGrid columns="1" cellpadding="10">
+					<h:panelGrid columns="3" cellpadding="10">
+						<p:outputLabel>6.2.2</p:outputLabel>
+						<p:outputLabel>${msg.headerUpLands}</p:outputLabel>
+						<p:selectOneMenu id="uplandsBelongs"
+							value="#{assetsView.assetsOfFamily.upLandsAvailable}"
+							converter="selectionCodeConverter" style="width:50px"
+							effect="fade" var="s"
+							disabled="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}">
+
+							<f:selectItems value="#{assetsView.yesNoList}"
+								var="selectedStatus"
+								itemLabel="#{selectedStatus.code}-#{selectedStatus.description}"
+								itemValue="#{selectedStatus}" />
+
+							<p:column>
+								<h:outputText value="#{s.code}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{s.description}" />
+							</p:column>
+
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<p:panelGrid>
+						<p:commandButton value="${msg.headerMember}" icon="ui-icon-plus"
+							type="button" onclick="PF('dialogMemberUpLands').show();" />
+						<p:dataTable id="upLandsList" var="upLands"
+							value="#{assetsView.assetsOfFamily.upLands}" editable="true">
+							<p:column headerText="" width="75">
+								<p:commandButton disabled="#{upLands.id!=0}" immediate="true"
+									actionListener="#{assetsView.removeItemUpLoands(upLands)}"
+									id="removeBtn" update=":frmAsessts" value="${msg.buttonRemove}" />
+							</p:column>
+							<p:column headerText="${msg.headerMember}" width="50">
+								<h:outputLabel value="#{upLands.member.name}" />
+							</p:column>
+
+							<p:column headerText="${msg.fieldAcres}" width="50">
+								<p:inputText id="upLandsMarketAcres"
+									value="#{upLands.landExtend.acres}"
+									validatorMessage="${validate.enterMonthlyExpenseAmount}"
+									readonly="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}"
+									style="width:100%">
+									<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+								</p:inputText>
+							</p:column>
+							<p:column headerText="${msg.fieldRoods}" width="50">
+								<p:inputText id="upLandsMarketRoods"
+									value="#{upLands.landExtend.roods}"
+									validatorMessage="${validate.enterMonthlyExpenseAmount}"
+									readonly="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}"
+									style="width:100%">
+									<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+								</p:inputText>
+							</p:column>
+							<p:column headerText="${msg.fieldPurch}" width="50">
+								<p:inputText id="upLandsMarketPurch"
+									value="#{upLands.landExtend.purch}"
+									validatorMessage="${validate.enterMonthlyExpenseAmount}"
+									readonly="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}"
+									style="width:100%">
+									<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+								</p:inputText>
+							</p:column>
+
+							<p:column headerText="${msg.fieldNatureOfOwnership}">
+								<p:selectOneMenu id="upLandsnatureOfOwnership"
+									value="#{upLands.natureOfOwnerShip}" style="width:50px;"
+									converter="selectionCodeConverter" effect="fade" var="s"
+									filter="true" filterMatchMode="startsWith"
+									disabled="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}">
+									<f:selectItems value="#{assetsView.natureOfOwnershipOtherList}"
+										var="selectedOwnership" itemLabel="#{selectedOwnership.code}"
+										itemValue="#{selectedOwnership}" />
+									<p:column>
+										<h:outputText value="#{s.code}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{s.description}" />
+									</p:column>
+								</p:selectOneMenu>
+							</p:column>
+							<p:column headerText="${msg.fieldMarketValue}" width="50">
+								<p:inputText id="upLandsMarketValue"
+									value="#{upLands.landExtend.marketValue}"
+									validatorMessage="${validate.enterMonthlyExpenseAmount}"
+									readonly="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}"
+									style="width:100%">
+									<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+								</p:inputText>
+							</p:column>
+						</p:dataTable>
+					</p:panelGrid>
+				</h:panelGrid>
+			</p:panel>
+
+
+			<p:panel id="lowLands" header="${msg.headerLowLands}">
+				<h:panelGrid columns="1" cellpadding="10">
+					<h:panelGrid columns="3" cellpadding="10">
+						<p:outputLabel>6.2.3</p:outputLabel>
+						<p:outputLabel>${msg.headerLowLands}</p:outputLabel>
+						<p:selectOneMenu id="lowLandsBelongs"
+							value="#{assetsView.assetsOfFamily.lowLandsAvailable}"
+							converter="selectionCodeConverter" style="width:50px"
+							effect="fade" var="s"
+							disabled="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}">
+
+							<f:selectItems value="#{assetsView.yesNoList}"
+								var="selectedStatus"
+								itemLabel="#{selectedStatus.code}-#{selectedStatus.description}"
+								itemValue="#{selectedStatus}" />
+
+							<p:column>
+								<h:outputText value="#{s.code}" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{s.description}" />
+							</p:column>
+
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<p:panelGrid>
+						<p:commandButton value="${msg.headerMember}" icon="ui-icon-plus"
+							type="button" onclick="PF('dialogMemberLowLands').show();" />
+						<p:dataTable id="lowLandsList" var="lowLands"
+							value="#{assetsView.assetsOfFamily.lowLands}" editable="true">
+							<p:column headerText="${msg.headerMember}" width="50">
+								<h:outputLabel value="#{lowLands.member.name}" />
+							</p:column>
+
+							<p:column headerText="${msg.fieldAcres}" width="50">
+								<p:inputText id="lowLandsMarketAcres"
+									validatorMessage="${validate.enterMonthlyExpenseAmount}"
+									value="#{lowLands.landExtend.acres}"
+									readonly="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}"
+									style="width:100%">
+									<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+								</p:inputText>
+							</p:column>
+							<p:column headerText="${msg.fieldRoods}" width="50">
+								<p:inputText id="lowLandsMarketRoods"
+									validatorMessage="${validate.enterMonthlyExpenseAmount}"
+									value="#{lowLands.landExtend.roods}"
+									readonly="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}"
+									style="width:100%">
+									<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+								</p:inputText>
+							</p:column>
+							<p:column headerText="${msg.fieldPurch}" width="50">
+								<p:inputText id="lowLandsMarketPurch"
+									validatorMessage="${validate.enterMonthlyExpenseAmount}"
+									value="#{lowLands.landExtend.purch}"
+									readonly="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}"
+									style="width:100%">
+									<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+								</p:inputText>
+							</p:column>
+
+							<p:column headerText="${msg.fieldNatureOfOwnership}">
+								<p:selectOneMenu id="lowLandsnatureOfOwnership"
+									value="#{lowLands.natureOfOwnerShip}"
+									converter="selectionCodeConverter" effect="fade" var="s"
+									filter="true" filterMatchMode="startsWith"
+									disabled="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}">
+									<f:selectItems value="#{assetsView.natureOfOwnershipOtherList}"
+										var="selectedOwnership" itemLabel="#{selectedOwnership.code}"
+										itemValue="#{selectedOwnership}" />
+									<p:column>
+										<h:outputText value="#{s.code}" />
+									</p:column>
+									<p:column>
+										<h:outputText value="#{s.description}" />
+									</p:column>
+								</p:selectOneMenu>
+							</p:column>
+							<p:column headerText="${msg.fieldMarketValue}" width="50">
+								<p:inputText id="lowLandsMarketValue"
+									validatorMessage="${validate.enterMonthlyExpenseAmount}"
+									value="#{lowLands.landExtend.marketValue}"
+									readonly="#{!(assetsView.uiMode=='new'||assetsView.uiMode=='update')}"
+									style="width:100%">
+									<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+								</p:inputText>
+							</p:column>
+						</p:dataTable>
+					</p:panelGrid>
+				</h:panelGrid>
+			</p:panel>
+			<h:panelGrid columns="2">
+				<p:commandButton value="${msg.buttonNext}" icon="ui-icon-carat-1-e"
+					update=":frmAsessts" action="#{assetsView.save}">
+				</p:commandButton>
+			</h:panelGrid>
+			<p:dialog header="Add Members Other House and buildings"
+				widgetVar="dialogMemberOtherHouseAndBuildings" minHeight="40">
+				<h:panelGrid columns="1">
+					<p:pickList id="pickListMemberOtherHouseAndBuildings"
+						converter="socialogicalInfoConverter"
+						value="#{assetsView.memberModelOtherHouse}" var="member"
+						itemLabel="#{member.name}" itemValue="#{member}" />
+
+					<p:commandButton update=":frmAsessts:otherHouseAndBuildings"
+						icon="ui-icon-ok" value="OK"
+						actionListener="#{assetsView.addToItemListOtherHouseAndBuilnding}"
+						oncomplete="PF('dialogMemberOtherHouseAndBuildings').hide();" />
+				</h:panelGrid>
+			</p:dialog>
+
+			<p:dialog header="${msg.headerAddUpLands}"
+				widgetVar="dialogMemberUpLands" minHeight="40">
+				<h:panelGrid columns="1">
+					<p:pickList id="pickListMemberUpLands"
+						converter="socialogicalInfoConverter"
+						value="#{assetsView.memberModelUpLands}" var="member"
+						itemLabel="#{member.name}" itemValue="#{member}" />
+
+					<p:commandButton update=":frmAsessts:uplands" icon="ui-icon-ok"
+						value="OK" actionListener="#{assetsView.addToItemListUpLands}"
+						oncomplete="PF('dialogMemberUpLands').hide();" />
+				</h:panelGrid>
+			</p:dialog>
+
+			<p:dialog header="${msg.headerAddLowLands}"
+				widgetVar="dialogMemberLowLands" minHeight="40">
+				<h:panelGrid columns="1">
+					<p:pickList id="pickListMemberLowLands"
+						converter="socialogicalInfoConverter"
+						value="#{assetsView.memberModelLowLands}" var="member"
+						itemLabel="#{member.name}" itemValue="#{member}" />
+
+					<p:commandButton update=":frmAsessts:lowLands" icon="ui-icon-ok"
+						value="OK" actionListener="#{assetsView.addToItemListLowLands}"
+						oncomplete="PF('dialogMemberLowLands').hide();" />
+				</h:panelGrid>
+			</p:dialog>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,162 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user" value="#{otherAssetsView.userDetails.username}" />
+	<ui:define name="content">
+		<p:steps styleClass="custom"
+			activeIndex="#{otherAssetsView.uiMode=='new'?6:12}"
+			readonly="#{(otherAssetsView.uiMode=='new')}">
+			<p:menuitem value="${msg.identificationDetails}"
+				url="BIIdentificationInfo.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.sociologicalInformation}"
+				url="BISocialogicalInfo.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.averageFamilyExpenses}"
+				url="BIFamilyExpenses.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.averageMonthlyIncome}"
+				url="BIMonthlyIncome.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.savings}"
+				url="BISavings.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.assets}"
+				url="BIAssets.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.otherAssets}"
+				url="BIOtherAssets.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.indebtedness}"
+				url="BIIndebitness.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.house}"
+				url="BIHouse.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.socialRelationship}"
+				url="BISocialRelationship.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.otherInformation}"
+				url="BIOtherInfo.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.comment}"
+				url="Comments.xhtml?#{otherAssetsView.navParam}" />
+		</p:steps>
+		<h:form id="frmOtherAssests">
+			<p:growl id="growl" showDetail="true" sticky="true" />
+			<p:panel id="pnlVehicles" header="${msg.headerVehicle}">
+				<p:dataTable id="vehicles" var="vehicle"
+					value="#{otherAssetsView.assetsOtherVehicles}" editable="true">
+					<p:column headerText="${msg.fieldIndex}" width="10">
+						<h:outputLabel value="#{vehicle.machine.code}" />
+					</p:column>
+					<p:column headerText="${msg.fieldExp}" width="150">
+						<h:outputLabel value="#{vehicle.machine.description}" />
+					</p:column>
+
+					<p:column headerText="${msg.fieldAmount}" width="50">
+						<p:inputText id="vehiclesAmount" value="#{vehicle.amount}"
+							validatorMessage="#{validate.enterValidFormat}"
+							style="width:100%;"
+							readonly="#{!(otherAssetsView.uiMode=='new'||otherAssetsView.uiMode=='update')}" >
+							<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+)$" />
+						</p:inputText>
+					</p:column>
+					<p:column headerText="${msg.fieldMarketValue}" width="50">
+						<p:inputText id="vehiclesMarketValue"
+							validatorMessage="#{validate.enterValidFormat}"
+							value="#{vehicle.marketValue}" style="width:100%;"
+							readonly="#{!(otherAssetsView.uiMode=='new'||otherAssetsView.uiMode=='update')}">
+							<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+)$" />
+						</p:inputText>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+			<p:panel id="pnlHouseHoldEq" header="${msg.headerHouseHaldEq}">
+				<p:dataTable id="houseHoldEq" var="houseHoldEq"
+					value="#{otherAssetsView.assetsOtherHouseHoldEq}" editable="true">
+					<p:column headerText="${msg.fieldIndex}" width="10">
+						<h:outputLabel value="#{houseHoldEq.machine.code}" />
+					</p:column>
+					<p:column headerText="${msg.fieldExp}" width="150">
+						<h:outputLabel value="#{houseHoldEq.machine.description}" />
+					</p:column>
+
+					<p:column headerText="${msg.fieldAmount}" width="50">
+						<p:inputText id="houseHoldEqAmount" value="#{houseHoldEq.amount}"
+							validatorMessage="#{validate.enterValidFormat}"
+							style="width:100%;"
+							readonly="#{!(otherAssetsView.uiMode=='new'||otherAssetsView.uiMode=='update')}" >
+							<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+)$" />
+						</p:inputText>
+					</p:column>
+					<p:column headerText="${msg.fieldMarketValue}" width="50">
+						<p:inputText id="houseHoldEqMarketValue"
+							validatorMessage="#{validate.enterValidFormat}"
+							value="#{houseHoldEq.marketValue}" style="width:100%;"
+							readonly="#{!(otherAssetsView.uiMode=='new'||otherAssetsView.uiMode=='update')}">
+							<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+)$" />
+						</p:inputText>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+			<p:panel id="pnlMachine" header="${msg.headerMachine}">
+				<p:dataTable id="machine" var="machine"
+					value="#{otherAssetsView.assetsOtherMachine}" editable="true">
+					<p:column headerText="${msg.fieldIndex}" width="10">
+						<h:outputLabel value="#{machine.machine.code}" />
+					</p:column>
+					<p:column headerText="${msg.fieldExp}" width="150">
+						<h:outputLabel value="#{machine.machine.description}" />
+					</p:column>
+
+					<p:column headerText="${msg.fieldAmount}" width="50">
+						<p:inputText id="machineAmount" value="#{machine.amount}"
+							style="width:100%;"
+							validatorMessage="#{validate.enterValidFormat}"
+							readonly="#{!(otherAssetsView.uiMode=='new'||otherAssetsView.uiMode=='update')}" >
+							<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+)$" />
+						</p:inputText>
+					</p:column>
+					<p:column headerText="${msg.fieldMarketValue}" width="50">
+						<p:inputText id="machineMarketValue"
+							validatorMessage="#{validate.enterValidFormat}"
+							value="#{machine.marketValue}" style="width:100%;"
+							readonly="#{!(otherAssetsView.uiMode=='new'||otherAssetsView.uiMode=='update')}">
+							<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+)$" />
+						</p:inputText>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+			<p:panel id="pnlAnimal" header="${msg.headerAnimal}">
+				<p:dataTable id="animal" var="animal"
+					value="#{otherAssetsView.assetsOtherAnimals}" editable="true">
+					<p:column headerText="${msg.fieldIndex}" width="10">
+						<h:outputLabel value="#{animal.machine.code}" />
+					</p:column>
+					<p:column headerText="${msg.fieldExp}" width="150">
+						<h:outputLabel value="#{animal.machine.description}" />
+					</p:column>
+
+					<p:column headerText="${msg.fieldAmount}" width="50">
+						<p:inputText id="animalAmount" value="#{animal.amount}"
+							style="width:100%;"
+							validatorMessage="#{validate.enterValidFormat}"
+							readonly="#{!(otherAssetsView.uiMode=='new'||otherAssetsView.uiMode=='update')}">
+							<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+)$" />
+						</p:inputText>
+					</p:column>
+					<p:column headerText="${msg.fieldMarketValue}" width="50">
+						<p:inputText id="animalMarketValue" value="#{animal.marketValue}"
+							style="width:100%;"
+							validatorMessage="#{validate.enterValidFormat}"
+							readonly="#{!(otherAssetsView.uiMode=='new'||otherAssetsView.uiMode=='update')}">
+							<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+)$" />
+						</p:inputText>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			<h:panelGrid columns="2">
+				<p:commandButton value="#{msg.buttonNext}" icon="ui-icon-carat-1-e"
+					action="#{otherAssetsView.save}" update=":frmOtherAssests">
+				</p:commandButton>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

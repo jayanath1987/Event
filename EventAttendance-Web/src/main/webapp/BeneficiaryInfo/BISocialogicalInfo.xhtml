@@ -1,0 +1,499 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user" value="#{houseView.userDetails.username}" />
+	<ui:define name="content">
+		<style type="text/css">
+.ui-datatable-header {
+	height: 200px !important;
+}
+
+.ui-datatable-scrollable-header-box th {
+	height: 200px !important;
+}
+</style>
+		<p:steps styleClass="custom"
+			activeIndex="#{otherAssetsView.uiMode=='new'?1:12}"
+			readonly="#{(otherAssetsView.uiMode=='new')}">
+			<p:menuitem value="${msg.identificationDetails}"
+				url="BIIdentificationInfo.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.sociologicalInformation}"
+				url="BISocialogicalInfo.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.averageFamilyExpenses}"
+				url="BIFamilyExpenses.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.averageMonthlyIncome}"
+				url="BIMonthlyIncome.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.savings}"
+				url="BISavings.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.assets}"
+				url="BIAssets.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.otherAssets}"
+				url="BIOtherAssets.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.indebtedness}"
+				url="BIIndebitness.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.house}"
+				url="BIHouse.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.socialRelationship}"
+				url="BISocialRelationship.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.otherInformation}"
+				url="BIOtherInfo.xhtml?#{otherAssetsView.navParam}" />
+			<p:menuitem value="${msg.comment}"
+				url="Comments.xhtml?#{identificationInfoView.navParam}" />
+		</p:steps>
+		<h:form id="frmSocialogicalInfo">
+			<p:growl id="growl" showDetail="true" sticky="false"
+				globalOnly="false" />
+
+			<p:dataTable id="socialogicalInfo" var="socialogicalInfo"
+				value="#{socialogicalInfoView.socialogicalInfo}" editable="true"
+				scrollable="true" scrollWidth="750" frozenColumns="2">
+
+
+				<p:column headerText="#(1)" width="4">
+					<p:commandButton disabled="#{socialogicalInfo.id!=0}"
+						immediate="true"
+						actionListener="#{socialogicalInfoView.removeBenificiary(socialogicalInfo)}"
+						id="removeBtn" update=":frmSocialogicalInfo:socialogicalInfo"
+						value="${msg.buttonRemove}" />
+
+				</p:column>
+				<p:column headerText="${msg.fieldName} (2)" width="96">
+					<p:inputText id="name" value="#{socialogicalInfo.name}"
+						style="width:100%;" required="true"
+						requiredMessage="${validate.enterFullName}"
+						readonly="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}" />
+				</p:column>
+
+				<p:column headerText="${msg.fieldRelationship} (3)" width="70">
+					<p:selectOneMenu id="relationship" style="width:50px;"
+						value="#{socialogicalInfo.relationship}" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						converter="selectionCodeConverter" effect="fade" var="s"
+						filter="true" filterMatchMode="startsWith"
+						disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+						<f:selectItems value="#{socialogicalInfoView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+
+						<f:selectItems value="#{socialogicalInfoView.relationshipList}"
+							var="selectedRelationship"
+							itemLabel="#{selectedRelationship.code}"
+							itemValue="#{selectedRelationship}" />
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="${msg.fieldGender} (4)" width="70">
+					<p:selectOneMenu id="gender" value="#{socialogicalInfo.gender}"
+						style="width:50px;" converter="selectionCodeConverter"
+						required="true" requiredMessage="${validate.selectDDLs}"
+						effect="fade" var="s" filter="true" filterMatchMode="startsWith"
+						disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+						<f:selectItems value="#{socialogicalInfoView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+
+						<f:selectItems value="#{socialogicalInfoView.genderList}"
+							var="selectedGender" itemLabel="#{selectedGender.code}"
+							itemValue="#{selectedGender}" />
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="${msg.fieldDateOfBirth} (5)" width="90">
+					<p:calendar id="dateOfBirth"
+						value="#{socialogicalInfo.dateOfBirth}" pattern="yyyy-MM-dd"
+						mask="true" required="true"
+						requiredMessage="${validate.selectDob}"
+						validatorMessage="${validate.selectDobFormat}"
+						readonly="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+					</p:calendar>
+				</p:column>
+
+				<p:column headerText="${msg.fieldAgeUpToLastBirthday} (6)" width="70">
+					<p:inputText id="ageUpToLastBirthday"
+						value="#{socialogicalInfo.ageUpToLastBirthday}"
+						readonly="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+
+				<p:column headerText="${msg.fieldNIC} (7)" width="80">
+					<p:inputText id="nic" value="#{socialogicalInfo.nic}"
+						readonly="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}"
+						style="width:100%" validatorMessage="${validate.enterValidNIC}">
+						<f:validateRegex pattern="^$|\d{9}(X|x|V|v|v)|\d{12}$" />
+					</p:inputText>
+				</p:column>
+
+				<!-- 				<p:column headerText="7" width="90"> -->
+				<!-- 					<p:inputText id="slin" value="#{socialogicalInfo.slin}" -->
+				<!-- 						readonly="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}" -->
+				<!-- 						style="width:100%" /> -->
+				<!-- 				</p:column> -->
+
+				<p:column headerText="${msg.fieldMaritualStatus} (8)" width="70">
+					<p:selectOneMenu id="maritualStatus" style="width:50px;"
+						value="#{socialogicalInfo.maritalStatus}" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						converter="selectionCodeConverter" effect="fade" var="s"
+						filter="true" filterMatchMode="startsWith"
+						disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+						<f:selectItems value="#{socialogicalInfoView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems value="#{socialogicalInfoView.maritualStatusList}"
+							var="selectedMaritalStatus"
+							itemLabel="#{selectedMaritalStatus.code}"
+							itemValue="#{selectedMaritalStatus}" />
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="${msg.fieldPresentEduction} (9)" width="70">
+					<p:selectOneMenu id="presentEduction" style="width:50px;"
+						value="#{socialogicalInfo.presentEduction}" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						converter="selectionCodeConverter" effect="fade" var="s"
+						filter="true" filterMatchMode="startsWith"
+						disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+						<f:selectItems value="#{socialogicalInfoView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems
+							value="#{socialogicalInfoView.presentEducationList}"
+							var="selectedPresentEduction"
+							itemLabel="#{selectedPresentEduction.code}"
+							itemValue="#{selectedPresentEduction}" />
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="${msg.fieldHighetEduction} (10)" width="70">
+					<p:selectOneMenu id="highetEduction" style="width:50px;"
+						value="#{socialogicalInfo.highetEduction}" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						converter="selectionCodeConverter" effect="fade" var="s"
+						filter="true" filterMatchMode="startsWith"
+						disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+						<f:selectItems value="#{socialogicalInfoView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems value="#{socialogicalInfoView.educationLevelList}"
+							var="selectedPresentEduction"
+							itemLabel="#{selectedPresentEduction.code}"
+							itemValue="#{selectedPresentEduction}" />
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+					</p:selectOneMenu>
+				</p:column>
+
+
+				<p:column headerText="${msg.fieldProfessionalTrained} (11)" width="70">
+					<p:selectOneMenu id="professionalTrained" style="width:50px;"
+						value="#{socialogicalInfo.professionalTrained}" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						converter="selectionCodeConverter" effect="fade" var="s"
+						filter="true" filterMatchMode="startsWith"
+						disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+						<f:selectItems value="#{socialogicalInfoView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems value="#{socialogicalInfoView.yesNoList}"
+							var="selectProfessionalTrained"
+							itemLabel="#{selectProfessionalTrained.code}"
+							itemValue="#{selectProfessionalTrained}" />
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="${msg.fieldAchievedNVQ} (12)" width="70">
+					<p:selectOneMenu id="achievedNVQ" style="width:50px;"
+						value="#{socialogicalInfo.achivedNVQ}" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						converter="selectionCodeConverter" effect="fade" var="s"
+						filter="true" filterMatchMode="startsWith"
+						disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+						<f:selectItems value="#{socialogicalInfoView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems value="#{socialogicalInfoView.achievedNVQList}"
+							var="selectedAchievedNVQList"
+							itemLabel="#{selectedAchievedNVQList.code}"
+							itemValue="#{selectedAchievedNVQList}" />
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="${msg.fieldPresentInvolvement} (13)" width="70">
+					<p:selectOneMenu id="presentInvolvement" style="width:50px;"
+						value="#{socialogicalInfo.presentInvolvement}" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						converter="selectionCodeConverter" effect="fade" var="s"
+						filter="true" filterMatchMode="startsWith"
+						disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+						<f:selectItems value="#{socialogicalInfoView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems
+							value="#{socialogicalInfoView.presentInvolvementList}"
+							var="selectedPresentInvolvement"
+							itemLabel="#{selectedPresentInvolvement.code}"
+							itemValue="#{selectedPresentInvolvement}" />
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="${msg.fieldMainProfession} (14)" width="70">
+					<p:selectOneMenu id="mainProfession" style="width:50px;"
+						value="#{socialogicalInfo.mainProfession}" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						converter="selectionCodeConverter" effect="fade" var="s"
+						filter="true" filterMatchMode="startsWith"
+						disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+						<f:selectItems value="#{socialogicalInfoView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems value="#{socialogicalInfoView.professionList}"
+							var="selectedNatureOfTheProfession"
+							itemLabel="#{selectedNatureOfTheProfession.code}"
+							itemValue="#{selectedNatureOfTheProfession}" />
+
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="${msg.fieldNatureOfTheProfession} (15)" width="70">
+					<p:selectOneMenu id="natureOfTheProfession" style="width:50px;"
+						value="#{socialogicalInfo.natureOfTheProfession}" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						converter="selectionCodeConverter" effect="fade" var="s"
+						filter="true" filterMatchMode="startsWith"
+						disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+						<f:selectItems value="#{socialogicalInfoView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems value="#{socialogicalInfoView.mainIncomeList}"
+							var="selectedMainProfession"
+							itemLabel="#{selectedMainProfession.code}"
+							itemValue="#{selectedMainProfession}" />
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="${msg.fieldContributedPension} (16)" width="70">
+					<p:selectOneMenu id="contributedPension" style="width:50px;"
+						value="#{socialogicalInfo.contributedPension}"
+						converter="selectionCodeConverter" effect="fade" var="s"
+						filter="true" filterMatchMode="startsWith" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+						<f:selectItems value="#{socialogicalInfoView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems value="#{socialogicalInfoView.yesNoList}"
+							var="selectContributedPension"
+							itemLabel="#{selectContributedPension.code}"
+							itemValue="#{selectContributedPension}" />
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="${msg.fieldSamurdhiWelfare} (17)" width="70">
+					<p:selectOneMenu id="samurdhiWelfare" style="width:50px;"
+						value="#{socialogicalInfo.samurdhiWelfare}" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						converter="selectionCodeConverter" effect="fade" var="s"
+						filter="true" filterMatchMode="startsWith"
+						disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+						<f:selectItems value="#{socialogicalInfoView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems value="#{socialogicalInfoView.samurdhRecivingList}"
+							var="selectSamurdhiWelfare"
+							itemLabel="#{selectSamurdhiWelfare.code}"
+							itemValue="#{selectSamurdhiWelfare}" />
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="${msg.fieldDesabilityLevel} (18)" width="70">
+					<p:selectOneMenu id="desabilityLevel" style="width:50px;"
+						value="#{socialogicalInfo.desabilityLevel}" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						converter="selectionCodeConverter" effect="fade" var="s"
+						filter="true" filterMatchMode="startsWith"
+						disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+						<f:selectItems value="#{socialogicalInfoView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems value="#{socialogicalInfoView.diabilityList}"
+							var="selectDesabilityLevel"
+							itemLabel="#{selectDesabilityLevel.code}"
+							itemValue="#{selectDesabilityLevel}" />
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="${msg.fieldNanContageousDiseases} (19)" width="70">
+					<p:selectOneMenu id="nanContageousDiseases" style="width:50px;"
+						value="#{socialogicalInfo.nanContageousDiseases}" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						converter="selectionCodeConverter" effect="fade" var="s"
+						filter="true" filterMatchMode="startsWith"
+						disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+						<f:selectItems value="#{socialogicalInfoView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems
+							value="#{socialogicalInfoView.congentageousDiseasesList}"
+							var="selectNonContageousDiseases"
+							itemLabel="#{selectNonContageousDiseases.code}"
+							itemValue="#{selectNonContageousDiseases}" />
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+					</p:selectOneMenu>
+				</p:column>
+
+				<p:column headerText="${msg.fieldResCountry}" width="100">
+					<p:inputText id="resCountry" value="#{socialogicalInfo.resCountry}"
+						readonly="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldCountryCode}" width="50">
+					<p:inputText id="code" value="#{socialogicalInfo.code}"
+						readonly="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+
+				<p:column headerText="${msg.fieldMigrateReason}" width="70">
+					<p:selectOneMenu id="migrateReason" style="width:50px;"
+						value="#{socialogicalInfo.migrateReason}"
+						converter="selectionCodeConverter" effect="fade" var="s"
+						filter="true" filterMatchMode="startsWith" required="true"
+						requiredMessage="${validate.selectDDLs}"
+						disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}">
+						<f:selectItems value="#{socialogicalInfoView.commonList}"
+							var="selectedCommon" itemLabel="#{selectedCommon.code}"
+							itemValue="#{selectedCommon}" />
+						<f:selectItems value="#{socialogicalInfoView.migrateReasonList}"
+							var="selectMigrateReason" itemLabel="#{selectMigrateReason.code}"
+							itemValue="#{selectMigrateReason}" />
+						<p:column>
+							<h:outputText value="#{s.code}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{s.description}" />
+						</p:column>
+					</p:selectOneMenu>
+				</p:column>
+			</p:dataTable>
+			<h:panelGrid columns="2">
+				<p:commandButton value="${msg.buttonAddMultiple}"
+					icon="ui-icon-plus" type="button"
+					disabled="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}"
+					onclick="PF('dialogRowDel').show();" />
+				<p:commandButton value="${msg.buttonNext}" icon="ui-icon-carat-1-e"
+					update=":frmSocialogicalInfo" action="#{socialogicalInfoView.save}">
+				</p:commandButton>
+			</h:panelGrid>
+		</h:form>
+
+
+		<h:form id="frmRemoveConfirmation">
+			<p:dialog header="${msg.headerAddMember}"
+				visible="#{socialogicalInfoView.uiMode=='new'}"
+				widgetVar="dialogRowDel" minHeight="40">
+				<h:panelGrid columns="3">
+					<p:outputLabel for="rowCount" value="${msg.desRowCount}" />
+					<p:inputText id="rowCount"
+						value="#{socialogicalInfoView.addItemCount}" style="width:215px"
+						readonly="#{!(socialogicalInfoView.uiMode=='new'||socialogicalInfoView.uiMode=='update')}"
+						validatorMessage="#{validate.enterAddRowCount}">
+						<f:validateDoubleRange minimum="1" maximum="999" />
+					</p:inputText>
+					<p:commandButton icon="ui-icon-ok" value="${msg.btnOKAddRowDialog}"
+						actionListener="#{socialogicalInfoView.addMultipleItems}"
+						oncomplete="PF('dialogRowDel').hide();" />
+				</h:panelGrid>
+			</p:dialog>
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>
+
+
+</html>

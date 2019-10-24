@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Divinaguma - Beneficiary Information Management System</title>
+</h:head>
+<body>
+	<div>
+		<h:form styleClass="form-4">
+			<p:messages id="message" />
+			<h1>Login or Register</h1>
+			<p>
+				<label for="login">User Name</label>
+				<p:inputText value="#{loginView.userName}" id="username"
+					requiredMessage="Enter User Name" required="true"
+					placeholder="Username or email" />
+			</p>
+			<p>
+				<label for="password">Password</label>
+				<p:password value="#{loginView.password}" id="password"
+					requiredMessage="Enter Password" required="true" style="width:100%"
+					placeholder="Password" />
+			</p>
+
+			<p>
+				<p:commandButton update="message" id="loginButton" value="Continue"
+					action="#{loginView.login}" />
+			</p>
+		</h:form>
+	</div>
+</body>
+</html>

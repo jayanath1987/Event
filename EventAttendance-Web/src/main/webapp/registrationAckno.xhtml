@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Register Here</title>
+</h:head>
+
+<body>
+	<h:form>
+		<p:panel header="Registration">
+			<h:panelGrid id="grid" columns="3" cellpadding="5">
+				<h:outputLabel for="title" value="Title" style="font-weight:bold" />
+				<p:selectOneMenu id="title"
+					value="#{registrationView.inviteeDto.title}" style="width:150px">
+					<f:selectItem itemLabel="Mr." itemValue="Mr." />
+					<f:selectItem itemLabel="Mrs." itemValue="Mrs." />
+					<f:selectItem itemLabel="Miss." itemValue="Miss." />
+					<f:selectItem itemLabel="Ms." itemValue="Ms." />
+					<f:selectItem itemLabel="Dr." itemValue="Dr." />
+					<f:selectItem itemLabel="Professor." itemValue="Professor." />
+				</p:selectOneMenu>
+
+				<p:message for="title" />
+
+				<h:outputLabel for="fName" value="First Name/Initials"
+					style="font-weight:bold" />
+				<p:inputText id="fName" value="#{registrationView.inviteeDto.fName}"
+					required="true" label="First Name Or Initials" />
+				<p:message for="fName" />
+
+				<h:outputLabel for="lName" value="Last Name"
+					style="font-weight:bold" />
+				<p:inputText id="lName" value="#{registrationView.inviteeDto.lName}"
+					required="true" label="Last Name" />
+				<p:message for="lName" />
+
+				<h:outputLabel for="designation" value="Designation"
+					style="font-weight:bold" />
+				<p:inputText id="designation"
+					value="#{registrationView.inviteeDto.designation}" required="true"
+					label="Designation" />
+				<p:message for="designation" />
+
+				<h:outputLabel for="organization" value="Organization"
+					style="font-weight:bold" />
+				<p:inputText id="organization"
+					value="#{registrationView.inviteeDto.organization}" required="true"
+					label="Organization" />
+				<p:message for="organization" />
+
+				<h:outputLabel for="officeAddress1" value="Office Address"
+					style="font-weight:bold" />
+				<p:inputText id="officeAddress1"
+					value="#{registrationView.inviteeDto.officeAddress1}"
+					required="true" label="Office Address Line 1" />
+				<p:message for="officeAddress1" />
+
+				<h:outputLabel for="officeAddress2" value=""
+					style="font-weight:bold" />
+				<p:inputText id="officeAddress2"
+					value="#{registrationView.inviteeDto.officeAddress2}"
+					label="Office Address Line 2" />
+				<p:message for="officeAddress2" />
+
+				<h:outputLabel for="officeAddress3" value=""
+					style="font-weight:bold" />
+				<p:inputText id="officeAddress3"
+					value="#{registrationView.inviteeDto.officeAddress3}"
+					label="Office Address Line 3" />
+				<p:message for="officeAddress3" />
+
+				<h:outputLabel for="workPhone" value="Work Phone"
+					style="font-weight:bold" />
+				<p:inputText id="workPhone"
+					value="#{registrationView.inviteeDto.workPhone}" label="Work Phone" />
+				<p:message for="workPhone" />
+
+				<h:outputLabel for="mobilePhone" value="Mobile Phone"
+					style="font-weight:bold" />
+				<p:inputText id="mobilePhone"
+					value="#{registrationView.inviteeDto.mobilePhone}"
+					label="Mobile Phone" />
+				<p:message for="mobilePhone" />
+
+				<h:outputLabel for="email" value="" style="font-weight:bold" />
+				<p:inputText id="email" value="#{registrationView.inviteeDto.email}"
+					label="email"
+					validatorMessage="email is not valid">
+					<f:validateRegex
+						pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+				</p:inputText>
+				<p:message for="email" />
+
+				<h:outputLabel for="mealPreferance" value="Meal Preferance"
+					style="font-weight:bold" />
+				<p:selectOneMenu id="mealPreferance"
+					value="#{registrationView.inviteeDto.mealPreferance}"
+					style="width:150px">
+					<f:selectItem itemLabel="Veg" itemValue="Veg" />
+					<f:selectItem itemLabel="Non-Veg" itemValue="Non-Veg" />
+				</p:selectOneMenu>
+
+				<p:message for="mealPreferance" />
+
+
+			</h:panelGrid>
+
+			<p:commandButton value="Save" update="grid" icon="ui-icon-check"
+				style="margin-right:10px" />
+
+		</p:panel>
+	</h:form>
+
+</body>
+</html>
+

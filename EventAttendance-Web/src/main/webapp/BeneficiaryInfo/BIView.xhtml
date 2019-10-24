@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user" value="#{finalPageView.userDetails.username}" />
+	<ui:define name="content">
+		<h:form id="frmLoad">
+
+			<p:outputPanel style="display:block">
+
+				<p>
+					<font size="6">Saved Successfully</font>
+				</p>
+				
+				<p>
+					<font size="6">ID-#{finalPageView.benifiaryID}</font>
+				</p>
+
+				<p:button outcome="BIIdentificationInfo" value="View"
+					icon="ui-icon-star">
+					<f:param name="action" value="load" />
+					<f:param name="beneficary" value="#{finalPageView.benifiaryID}" />
+				</p:button>
+				<p:button outcome="BIIdentificationInfo" value="Edit"
+					icon="ui-icon-star">
+					<f:param name="action" value="update" />
+					<f:param name="beneficary" value="#{finalPageView.benifiaryID}" />
+				</p:button>
+			</p:outputPanel>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

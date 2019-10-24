@@ -1,0 +1,201 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user"
+		value="#{socialRelationshipView.userDetails.username}" />
+	<ui:define name="content">
+		<p:steps activeIndex="#{socialRelationshipView.uiMode=='new'?9:12}"
+			readonly="#{(socialRelationshipView.uiMode=='new')}">
+			<p:menuitem value="${msg.identificationDetails}"
+				url="BIIdentificationInfo.xhtml?#{socialRelationshipView.navParam}" />
+			<p:menuitem value="${msg.sociologicalInformation}"
+				url="BISocialogicalInfo.xhtml?#{socialRelationshipView.navParam}" />
+			<p:menuitem value="${msg.averageFamilyExpenses}"
+				url="BIFamilyExpenses.xhtml?#{socialRelationshipView.navParam}" />
+			<p:menuitem value="${msg.averageMonthlyIncome}"
+				url="BIMonthlyIncome.xhtml?#{socialRelationshipView.navParam}" />
+			<p:menuitem value="${msg.savings}"
+				url="BISavings.xhtml?#{socialRelationshipView.navParam}" />
+			<p:menuitem value="${msg.assets}"
+				url="BIAssets.xhtml?#{socialRelationshipView.navParam}" />
+			<p:menuitem value="${msg.otherAssets}"
+				url="BIOtherAssets.xhtml?#{socialRelationshipView.navParam}" />
+			<p:menuitem value="${msg.indebtedness}"
+				url="BIIndebitness.xhtml?#{socialRelationshipView.navParam}" />
+			<p:menuitem value="${msg.house}"
+				url="BIHouse.xhtml?#{socialRelationshipView.navParam}" />
+			<p:menuitem value="${msg.socialRelationship}"
+				url="BISocialRelationship.xhtml?#{socialRelationshipView.navParam}" />
+			<p:menuitem value="${msg.otherInformation}"
+				url="BIOtherInfo.xhtml?#{socialRelationshipView.navParam}" />
+
+			<p:menuitem value="${msg.comment}"
+				url="Comments.xhtml?#{socialRelationshipView.navParam}" />
+		</p:steps>
+		<h:form id="frmSocialRelationship">
+			<p:dataTable id="tblSocialRelationship" var="socialRelation"
+				value="#{socialRelationshipView.socialRelationship}" editable="true">
+				<p:column headerText="" width="75">
+					<p:commandButton disabled="#{socialRelation.id!=0}" immediate="true"
+						actionListener="#{socialRelationshipView.removeItem(socialRelation)}"
+						id="removeBtn" update=":frmSocialRelationship"
+						value="${msg.buttonRemove}" />
+				</p:column>
+				<p:column headerText="${msg.fieldMemberName} (1)" width="50">
+					<h:outputLabel value="#{socialRelation.member.name}" />
+				</p:column>
+				<p:column headerText="${msg.fieldDivinagumaUnion} (3)" width="50">
+					<p:selectBooleanButton id="divinaguma"
+						value="#{socialRelation.divinaguma}" onLabel="Yes" offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldVillageDevelopment} (4)" width="50">
+					<p:selectBooleanButton id="villageDevelopment"
+						value="#{socialRelation.villageDevCommite}" onLabel="Yes"
+						offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+
+				<p:column headerText="${msg.fieldSchoolDevCommite} (5)" width="50">
+					<p:selectBooleanButton id="schoolDevCommite"
+						value="#{socialRelation.schoolDevCommite}" onLabel="Yes"
+						offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldFarmersOrganization} (6)"
+					width="50">
+					<p:selectBooleanButton id="farmersOrganization"
+						value="#{socialRelation.farmersOrganization}" onLabel="Yes"
+						offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldSanasa} (7)" width="50">
+					<p:selectBooleanButton id="sanasa" value="#{socialRelation.sanasa}"
+						onLabel="Yes" offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldDemiseAidCommete} (8)" width="50">
+					<p:selectBooleanButton id="demiseAidCommete"
+						value="#{socialRelation.demiseAidCommete}" onLabel="Yes"
+						offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldCooperativeSociaty} (9)" width="50">
+					<p:selectBooleanButton id="cooperativeSociaty"
+						value="#{socialRelation.cooperativeSociaty}" onLabel="Yes"
+						offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldSportsClub} (10)" width="50">
+					<p:selectBooleanButton id="sportsClub"
+						value="#{socialRelation.sportsClub}" onLabel="Yes" offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldYouthClub} (11)" width="50">
+					<p:selectBooleanButton id="youthClub"
+						value="#{socialRelation.youthClub}" onLabel="Yes" offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldChildrensClub} (12)" width="50">
+					<p:selectBooleanButton id="childrensClub"
+						value="#{socialRelation.childrensClub}" onLabel="Yes"
+						offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldGamidiriya} (13)" width="50">
+					<p:selectBooleanButton id="fieldGamidiriya"
+						value="#{socialRelation.gamidiriya}" onLabel="Yes" offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldVillageDefence} (14)" width="50">
+					<p:selectBooleanButton id="villageDefence"
+						value="#{socialRelation.villageDefence}" onLabel="Yes"
+						offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldPeoplesForum} (15)" width="50">
+					<p:selectBooleanButton id="peoplesForum"
+						value="#{socialRelation.peoplesForum}" onLabel="Yes" offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldFisheriesSociety} (16)" width="50">
+					<p:selectBooleanButton id="fisheriesSociety"
+						value="#{socialRelation.fisheriesSociety}" onLabel="Yes"
+						offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldSarvodaya} (17)" width="50">
+					<p:selectBooleanButton id="sarvodaya"
+						value="#{socialRelation.sarvodaya}" onLabel="Yes" offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldWomenSociaty} (18)" width="50">
+					<p:selectBooleanButton id="womenSociaty"
+						value="#{socialRelation.womenSociaty}" onLabel="Yes" offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldEldersOrganization} (19)"
+					width="50">
+					<p:selectBooleanButton id="eldersOrg"
+						value="#{socialRelation.eldersOrg}" onLabel="Yes" offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+				<p:column headerText="${msg.fieldOtherOrganization} (20)" width="50">
+					<p:selectBooleanButton id="otherOrg"
+						value="#{socialRelation.otherOrg}" onLabel="Yes" offLabel="No"
+						readonly="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+						style="width:100%" />
+				</p:column>
+			</p:dataTable>
+
+
+			<h:panelGrid columns="2">
+				<p:commandButton value="${msg.buttonSelectMember}"
+					icon="ui-icon-plus" type="button"
+					disabled="#{!(socialRelationshipView.uiMode=='new'||socialRelationshipView.uiMode=='update')}"
+					onclick="PF('dialogMember').show();" />
+
+				<p:commandButton value="${msg.buttonNext}" icon="ui-icon-carat-1-e"
+					action="#{socialRelationshipView.save}">
+				</p:commandButton>
+			</h:panelGrid>
+
+			<p:dialog header="${msg.headerAddMember}" widgetVar="dialogMember"
+				visible="#{socialRelationshipView.uiMode=='new'}" minHeight="40">
+				<h:panelGrid columns="1">
+					<p:pickList id="pickListMember"
+						converter="socialogicalInfoConverter"
+						value="#{socialRelationshipView.memberModel}" var="member"
+						itemLabel="#{member.name}" itemValue="#{member}" />
+
+					<p:commandButton update=":frmSocialRelationship" icon="ui-icon-ok"
+						value="${msg.btnOKAddRowDialog}"
+						actionListener="#{socialRelationshipView.addToItemList}"
+						oncomplete="PF('dialogMember').hide();" />
+				</h:panelGrid>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,72 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user"
+		value="#{searchInvitessView.userDetails.username}" />
+	<ui:define name="content">
+		
+
+		<h:form id="frmIdentificationDetails">
+			<p:growl id="growl" showDetail="true" sticky="false"
+				globalOnly="true" />
+	
+			<p:dataTable var="item" groupRow="true"
+				value="#{searchInvitessView.inviteeList}"
+				widgetVar="itemTable"  sortMode="multiple"
+				emptyMessage="No item found with given criteria">
+				<p:column filterBy="#{item.organization}" sortBy="#{item.organization}" headerText="Organization" 
+					filterMatchMode="contains">
+					<h:outputText value="#{item.organization}" />
+				</p:column>
+<p:column filterBy="#{item.id}" sortBy="#{item.id}"
+					headerText="Id" filterMatchMode="contains" >
+					<h:outputText value="#{item.id}" />
+				</p:column>
+
+				<p:column filterBy="#{item.title}" sortBy="#{item.title}"
+					headerText="title" filterMatchMode="contains">
+					<h:outputText value="#{item.title}" />
+				</p:column>
+				<p:column filterBy="#{item.fName}" sortBy="#{item.fName}" headerText="First Name"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.fName}" />
+				</p:column>
+				<p:column filterBy="#{item.lName}" sortBy="#{item.lName}" headerText="Last Name"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.lName}" />
+				</p:column>
+
+				<p:column filterBy="#{item.designation}" sortBy="#{item.designation}" headerText="Designation"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.designation}" />
+				</p:column>
+
+				
+
+				<p:column filterBy="#{item.workPhone}" sortBy="#{item.workPhone}"
+					headerText="Work Phone" filterMatchMode="contains">
+					<h:outputText value="#{item.workPhone}" />
+				</p:column>
+
+				<p:column filterBy="#{item.mobilePhone}" sortBy="#{item.mobilePhone}" headerText="Mobile Phone"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.mobilePhone}" />
+				</p:column>
+
+				<p:column filterBy="#{item.email}" sortBy="#{item.email}" headerText="email"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.email}" />
+				</p:column>
+				
+				<p:column filterBy="#{item.status}" sortBy="#{item.status}" headerText="Status"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.status}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

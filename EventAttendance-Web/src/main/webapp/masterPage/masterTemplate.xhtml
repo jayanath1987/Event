@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<meta charset="utf-8" />
+<h:head>
+	<script type="text/javascript" language="javascript">
+		function disableBackButton() {
+			window.history.forward()
+		}
+		disableBackButton();
+		window.onload = disableBackButton();
+		window.onpageshow = function(evt) {
+			if (evt.persisted)
+				disableBackButton()
+		}
+		window.onunload = function() {
+			void (0)
+		}
+	</script>
+	<title>Index</title>
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/css/default.css" />
+
+</h:head>
+<h:body id="headerBody">
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" resizable="false"
+			header="Event Attendance" collapsible="false">
+			<p:menubar>
+				<p:menuitem url="../index/index.xhtml"  value="Go to Home" icon="ui-icon-home" />
+				<p:submenu label="Register" icon="ui-icon-document">
+					<p:menuitem value="${msg.menuEdit}/${msg.menuSearch}"
+						url="../register/RegisterSearch.xhtml"
+						icon="ui-icon-pencil" />
+					<p:menuitem value="${msg.menuSendInvitaion}"
+						url="../invite/SendInvitation.xhtml"
+						icon="ui-icon-plus" />
+						
+					<p:menuitem value="Re-send Invitation"
+						url="../invite/ReSendInvitation.xhtml"
+						icon="ui-icon-plus" />
+					<p:menuitem value="Register New Attendee"
+						url="../invite/RegistrationOnAttendance.xhtml"
+						icon="ui-icon-plus" />	
+						
+					
+					
+				</p:submenu>
+
+				<f:facet name="options">
+					<p:commandButton type="button" icon="ui-icon-person"
+						value="#{user}" />
+					<a href="../logoutSession.xhtml"> <p:commandButton
+							type="button" value="${msg.menuButton}" icon="ui-icon-extlink" />
+					</a>
+				</f:facet>
+			</p:menubar>
+
+		</p:layoutUnit>
+
+		<p:layoutUnit position="south" size="25"
+			style="background-color:green;" resizable="true" closable="true"
+			collapsible="true">
+		</p:layoutUnit>
+
+
+		<p:layoutUnit position="center" size="100%">
+			<ui:insert name="content">Put default content here, if any.</ui:insert>
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>
+

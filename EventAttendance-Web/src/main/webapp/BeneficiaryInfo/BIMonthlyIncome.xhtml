@@ -1,0 +1,194 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user"
+		value="#{averageMonthlyIncomeView.userDetails.username}" />
+	<ui:define name="content">
+		<p:steps styleClass="custom"
+			activeIndex="#{averageMonthlyIncomeView.uiMode=='new'?3:12}"
+			readonly="#{(averageMonthlyIncomeView.uiMode=='new')}">
+			<p:menuitem value="${msg.identificationDetails}"
+				url="BIIdentificationInfo.xhtml?#{averageMonthlyIncomeView.navParam}" />
+			<p:menuitem value="${msg.sociologicalInformation}"
+				url="BISocialogicalInfo.xhtml?#{averageMonthlyIncomeView.navParam}" />
+			<p:menuitem value="${msg.averageFamilyExpenses}"
+				url="BIFamilyExpenses.xhtml?#{averageMonthlyIncomeView.navParam}" />
+			<p:menuitem value="${msg.averageMonthlyIncome}"
+				url="BIMonthlyIncome.xhtml?#{averageMonthlyIncomeView.navParam}" />
+			<p:menuitem value="${msg.savings}"
+				url="BISavings.xhtml?#{averageMonthlyIncomeView.navParam}" />
+			<p:menuitem value="${msg.assets}"
+				url="BIAssets.xhtml?#{averageMonthlyIncomeView.navParam}" />
+			<p:menuitem value="${msg.otherAssets}"
+				url="BIOtherAssets.xhtml?#{averageMonthlyIncomeView.navParam}" />
+			<p:menuitem value="${msg.indebtedness}"
+				url="BIIndebitness.xhtml?#{averageMonthlyIncomeView.navParam}" />
+			<p:menuitem value="${msg.house}"
+				url="BIHouse.xhtml?#{averageMonthlyIncomeView.navParam}" />
+			<p:menuitem value="${msg.socialRelationship}"
+				url="BISocialRelationship.xhtml?#{averageMonthlyIncomeView.navParam}" />
+			<p:menuitem value="${msg.otherInformation}"
+				url="BIOtherInfo.xhtml?#{averageMonthlyIncomeView.navParam}" />
+			<p:menuitem value="${msg.comment}"
+				url="Comments.xhtml?#{averageMonthlyIncomeView.navParam}" />
+
+
+		</p:steps>
+
+		<h:form id="frmMonthlyIncome">
+			<p:growl id="growl" showDetail="true" sticky="false" />
+			<p:dataTable id="income" var="income"
+				value="#{averageMonthlyIncomeView.averageMonthlyIncome}"
+				editable="true">
+
+				<p:column headerText="" width="6">
+					<p:commandButton disabled="#{income.id!=0}"
+						immediate="true"
+						actionListener="#{averageMonthlyIncomeView.removeItem(income)}"
+						id="removeBtn" update=":frmMonthlyIncome"
+						value="${msg.buttonRemove}" />
+				</p:column>
+
+				<p:column headerText="${msg.fieldMemberName} (1)" width="150">
+					<h:outputLabel value="#{income.member.name}" />
+				</p:column>
+				<p:column headerText="${msg.fieldSalary}(3)" width="50">
+					<p:inputText id="salary" value="#{income.salary}"
+						style="width:100%;" update=":frmMonthlyIncome:growl"
+						readonly="#{!(averageMonthlyIncomeView.uiMode=='new'||averageMonthlyIncomeView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+
+				<p:column headerText="${msg.fieldPension}(4)" width="110">
+					<p:inputText id="pension" value="#{income.pension}"
+						style="width:100%;"
+						readonly="#{!(averageMonthlyIncomeView.uiMode=='new'||averageMonthlyIncomeView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+				<p:column headerText="${msg.fieldSamurdhi} (5)" width="50">
+					<p:inputText id="samurdhi" value="#{income.samurdhi}"
+						style="width:100%;"
+						readonly="#{!(averageMonthlyIncomeView.uiMode=='new'||averageMonthlyIncomeView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+				<p:column headerText="${msg.fieldHandicap} (6)" width="50">
+					<p:inputText id="handicap" value="#{income.handicap}"
+						style="width:100%;"
+						readonly="#{!(averageMonthlyIncomeView.uiMode=='new'||averageMonthlyIncomeView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+				<p:column headerText="${msg.fieldTBAllowance}(7)" width="50">
+					<p:inputText id="tbAllowance" value="#{income.tbAllowance}"
+						style="width:100%;"
+						readonly="#{!(averageMonthlyIncomeView.uiMode=='new'||averageMonthlyIncomeView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+				<p:column headerText="${msg.fieldPublicDonations} (8)" width="50">
+					<p:inputText id="publicDonations" value="#{income.publicDonations}"
+						style="width:100%;"
+						readonly="#{!(averageMonthlyIncomeView.uiMode=='new'||averageMonthlyIncomeView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+				<p:column headerText="${msg.fieldOtherAllowances} (9)" width="50">
+					<p:inputText id="otherAllowances" value="#{income.otherAllowances}"
+						style="width:100%;"
+						readonly="#{!(averageMonthlyIncomeView.uiMode=='new'||averageMonthlyIncomeView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+				<p:column headerText="${msg.fieldAgri} (10)" width="50">
+					<p:inputText id="employementAgri" value="#{income.employementAgri}"
+						style="width:100%;"
+						readonly="#{!(averageMonthlyIncomeView.uiMode=='new'||averageMonthlyIncomeView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+				<p:column headerText="${msg.fieldNonAgri} (11)" width="50">
+					<p:inputText id="employementNonAgri"
+						value="#{income.employementNonAgri}" style="width:100%;"
+						readonly="#{!(averageMonthlyIncomeView.uiMode=='new'||averageMonthlyIncomeView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+
+				<p:column headerText="${msg.fieldForignCountry}(12)" width="50">
+					<p:inputText id="postalOrderForign"
+						value="#{income.postalOrderForign}" style="width:100%;"
+						readonly="#{!(averageMonthlyIncomeView.uiMode=='new'||averageMonthlyIncomeView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+
+				<p:column headerText="${msg.fieldThisCounrty} (13)" width="50">
+					<p:inputText id="postalOrderThisCountry"
+						value="#{income.postalOrderThisCountry}" style="width:100%;"
+						readonly="#{!(averageMonthlyIncomeView.uiMode=='new'||averageMonthlyIncomeView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+
+				<p:column headerText="${msg.fieldOtherIncome} (14)" width="50">
+					<p:inputText id="otherIncome" value="#{income.otherIncome}"
+						style="width:100%;"
+						readonly="#{!(averageMonthlyIncomeView.uiMode=='new'||averageMonthlyIncomeView.uiMode=='update')}"
+						validatorMessage="#{validate.enterValidFormat}">
+						<f:validateRegex pattern="^($)|(\d+(\.\d*)?|\.\d+$)" />
+					</p:inputText>
+				</p:column>
+
+			</p:dataTable>
+
+			<h:panelGrid columns="2">
+				<p:commandButton value="${msg.buttonSelectMember}"
+					icon="ui-icon-plus" type="button"
+					disabled="#{!(averageMonthlyIncomeView.uiMode=='new'||averageMonthlyIncomeView.uiMode=='update')}"
+					onclick="PF('dialogMember').show();" />
+
+				<p:commandButton value="${msg.buttonNext}" icon="ui-icon-carat-1-e"
+					update=":frmMonthlyIncome"
+					action="#{averageMonthlyIncomeView.save}">
+
+				</p:commandButton>
+			</h:panelGrid>
+
+
+			<p:dialog header="${msg.headerAddMember}" widgetVar="dialogMember"
+				visible="#{averageMonthlyIncomeView.uiMode=='new'}" minHeight="40">
+				<h:panelGrid columns="1">
+					<p:pickList id="pickListMember"
+						converter="socialogicalInfoConverter"
+						value="#{averageMonthlyIncomeView.memberModel}" var="member"
+						itemLabel="#{member.name}" itemValue="#{member}" />
+
+					<p:commandButton update=":frmMonthlyIncome" icon="ui-icon-ok"
+						value="${msg.btnOKAddRowDialog}"
+						actionListener="#{averageMonthlyIncomeView.addToItemList}"
+						oncomplete="PF('dialogMember').hide();" />
+				</h:panelGrid>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+
+
+</ui:composition>
+</html>

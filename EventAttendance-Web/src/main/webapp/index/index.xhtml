@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:view encoding="UTF-8"/>
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+
+	<ui:define name="content">
+		<div style="height: 500px">
+
+			<p:dashboard id="board" model="#{indexView.model}">
+
+				<p:panel id="beneficiary" header="Invitaion">
+					<a href="../invite/SendInvitation.xhtml"> <img
+						src="../images/applicant/new-icon.gif" alt="Smiley face"
+						width="80" height="80" /> <h:outputText value="Send Invitaion" />
+					</a>
+					<a href="../invite/ReSendInvitation.xhtml"> <img
+						src="../images/applicant/new-icon.gif" alt="Smiley face"
+						width="80" height="80" /> <h:outputText value="Re Send Invitaion" />
+					</a>	
+					<a href="../register/RegisterSearch.xhtml"> <img
+						src="../images/applicant/new-icon.gif" alt="Smiley face"
+						width="80" height="80" /> <h:outputText value="Search" />
+					</a>
+					
+					<a href="../invite/RegistrationOnAttendance.xhtml"> <img
+						src="../images/applicant/new-icon.gif" alt="Smiley face"
+						width="80" height="80" /> <h:outputText value="New Participant" />
+					</a>	
+					
+					<a href="../invite/MarkAttendance.xhtml"> <img
+						src="../images/applicant/new-icon.gif" alt="Smiley face"
+						width="80" height="80" /> <h:outputText value="Mark Attendance" />
+					</a>
+					
+					<a href="../invite/MarkAttendance.xhtml"> <img
+						src="../images/applicant/new-icon.gif" alt="Smiley face"
+						width="80" height="80" /> <h:outputText value="Mark Attendance" />
+					</a>
+					
+					<a href="../register/ParticipantsFilter.xhtml"> <img
+						src="../images/applicant/new-icon.gif" alt="Smiley face"
+						width="80" height="80" /> <h:outputText value="Participation Info" />
+					</a>		
+				</p:panel>
+				
+				
+
+			</p:dashboard>
+
+			<div style="clear: both" />
+
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

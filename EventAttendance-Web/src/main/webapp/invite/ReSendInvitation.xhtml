@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user"
+		value="#{resendInvitaionsView.userDetails.username}" />
+	<ui:define name="content">
+
+		<p:panel id="grid" header="Invite">
+			<h:form id="frmIdentificationDetails">
+				<p:growl id="growl" showDetail="true" sticky="false"
+					globalOnly="true" />
+
+				<p:dataTable var="item" value="#{resendInvitaionsView.inviteeList}"
+					widgetVar="itemTable" emptyMessage="No item found"
+					rows="10" paginator="true" 
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+					<f:facet name="header">
+            Invite
+        </f:facet>
+					<p:column headerText="Id">
+						<h:outputText value="#{item.id}" />
+					</p:column>
+
+					<p:column headerText="title">
+						<h:outputText value="#{item.title}" />
+					</p:column>
+					<p:column headerText="First Name">
+						<h:outputText value="#{item.fName}" />
+					</p:column>
+					<p:column headerText="Last Name">
+						<h:outputText value="#{item.lName}" />
+					</p:column>
+
+					<p:column headerText="Designation">
+						<h:outputText value="#{item.designation}" />
+					</p:column>
+
+					<p:column headerText="Organization">
+						<h:outputText value="#{item.organization}" />
+					</p:column>
+
+					<p:column headerText="Work Phone">
+						<h:outputText value="#{item.workPhone}" />
+					</p:column>
+
+					<p:column headerText="Mobile Phone">
+						<h:outputText value="#{item.mobilePhone}" />
+					</p:column>
+
+					<p:column headerText="email">
+						<h:outputText value="#{item.email}" />
+					</p:column>
+
+
+
+					<p:column>
+						<p:commandButton value="Send Invitations"
+							action="#{resendInvitaionsView.sendInvitations(item)}"
+							update="frmIdentificationDetails">
+
+						</p:commandButton>
+					</p:column>
+
+
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

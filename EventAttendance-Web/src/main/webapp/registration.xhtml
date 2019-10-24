@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Register Here</title>
+</h:head>
+
+<body>
+<h:graphicImage value="images/nsoc.gif"  width="100%"/>
+	<h:form styleClass="ui-fluid">
+		<p:panel id="grid" header="Registration">
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				globalOnly="true" closable="true" />
+			<h:panelGrid columns="3" cellpadding="5"
+				columnClasses="ui-grid-col-4,ui-grid-col-8">
+				<h:outputLabel for="title" value="Title" style="font-weight:bold" />
+				<p:selectOneMenu id="title"
+					value="#{registrationView.inviteeDto.title}" style="width:150px"
+					disabled="#{!(registrationView.uiMode=='new'||registrationView.uiMode=='update')}">
+					<f:selectItem itemLabel="Mr." itemValue="Mr." />
+					<f:selectItem itemLabel="Mrs." itemValue="Mrs." />
+					<f:selectItem itemLabel="Miss." itemValue="Miss." />
+					<f:selectItem itemLabel="Ms." itemValue="Ms." />
+					<f:selectItem itemLabel="Dr." itemValue="Dr." />
+					<f:selectItem itemLabel="Professor." itemValue="Professor." />
+				</p:selectOneMenu>
+				<p:message for="title" />
+
+				<h:outputLabel for="fName" value="First Name/Initials"
+					style="font-weight:bold" />
+				<p:inputText id="fName" value="#{registrationView.inviteeDto.fName}"
+					required="true" requiredMessage="*"
+					label="First Name Or Initials"
+					readonly="#{!(registrationView.uiMode=='new'||registrationView.uiMode=='update')}" />
+				<p:message for="fName" />
+
+				<h:outputLabel for="lName" value="Last Name"
+					style="font-weight:bold" />
+				<p:inputText id="lName" value="#{registrationView.inviteeDto.lName}"
+					required="true" requiredMessage="*"
+					label="Last Name"
+					readonly="#{!(registrationView.uiMode=='new'||registrationView.uiMode=='update')}" />
+				<p:message for="lName" />
+
+				<h:outputLabel for="designation" value="Designation"
+					style="font-weight:bold" />
+				<p:inputText id="designation"
+					value="#{registrationView.inviteeDto.designation}" required="true"
+					requiredMessage="*" label="Designation"
+					readonly="#{!(registrationView.uiMode=='new'||registrationView.uiMode=='update')}" />
+				<p:message for="designation" />
+
+				<h:outputLabel for="organization" value="Organization"
+					style="font-weight:bold" />
+				<p:inputText id="organization"
+					value="#{registrationView.inviteeDto.organization}" required="true"
+					requiredMessage="*" label="Organization"
+					readonly="#{!(registrationView.uiMode=='new'||registrationView.uiMode=='update')}" />
+				<p:message for="organization" />
+
+				<h:outputLabel for="officeAddress1" value="Office Address"
+					style="font-weight:bold" />
+				<p:inputText id="officeAddress1"
+					value="#{registrationView.inviteeDto.officeAddress1}"
+					required="true" requiredMessage="*"
+					label="Office Address Line 1"
+					readonly="#{!(registrationView.uiMode=='new'||registrationView.uiMode=='update')}" />
+				<p:message for="officeAddress1" />
+
+				<h:outputLabel for="officeAddress2" value=""
+					style="font-weight:bold" />
+				<p:inputText id="officeAddress2"
+					value="#{registrationView.inviteeDto.officeAddress2}"
+					label="Office Address Line 2"
+					readonly="#{!(registrationView.uiMode=='new'||registrationView.uiMode=='update')}" />
+				<p:message for="officeAddress2" />
+
+				<h:outputLabel for="officeAddress3" value=""
+					style="font-weight:bold" />
+				<p:inputText id="officeAddress3"
+					value="#{registrationView.inviteeDto.officeAddress3}"
+					label="Office Address Line 3"
+					readonly="#{!(registrationView.uiMode=='new'||registrationView.uiMode=='update')}" />
+				<p:message for="officeAddress3" />
+
+				<h:outputLabel for="workPhone" value="Work Phone"
+					style="font-weight:bold" />
+				<p:inputText id="workPhone" required="true"
+					requiredMessage="*"
+					value="#{registrationView.inviteeDto.workPhone}" label="Work Phone"
+					readonly="#{!(registrationView.uiMode=='new'||registrationView.uiMode=='update')}" />
+				<p:message for="workPhone" />
+
+				<h:outputLabel for="mobilePhone" value="Mobile Phone"
+					style="font-weight:bold" />
+				<p:inputText id="mobilePhone"
+					value="#{registrationView.inviteeDto.mobilePhone}"
+					label="Mobile Phone"
+					readonly="#{!(registrationView.uiMode=='new'||registrationView.uiMode=='update')}" />
+				<p:message for="mobilePhone" />
+
+				<h:outputLabel for="email" value="e-Mail" style="font-weight:bold" />
+				<p:inputText id="email" value="#{registrationView.inviteeDto.email}"
+					required="true" requiredMessage="*" label="email"
+					validatorMessage="Please enter valid email"
+					readonly="#{!(registrationView.uiMode=='new'||registrationView.uiMode=='update')}">
+					<f:validateRegex
+						pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+				</p:inputText>
+				<p:message for="email" />
+
+				<h:outputLabel for="mealPreferance" value="Meal Preferance"
+					style="font-weight:bold" />
+				<p:selectOneMenu id="mealPreferance"
+					value="#{registrationView.inviteeDto.mealPreferance}"
+					style="width:150px"
+					disabled="#{!(registrationView.uiMode=='new'||registrationView.uiMode=='update')}">
+					<f:selectItem itemLabel="Veg" itemValue="Veg" />
+					<f:selectItem itemLabel="Non-Veg" itemValue="Non-Veg" />
+				</p:selectOneMenu>
+
+				<p:message for="mealPreferance" />
+
+
+
+			</h:panelGrid>
+			<h:panelGrid columns="2" cellpadding="0">
+				<p:commandButton value="Submit" action="#{registrationView.save}"
+					update="grid" icon="ui-icon-check"
+					rendered="#{registrationView.uiMode=='new'}"
+					style="margin-right:10px;background-color: green !important;width:100%" />
+
+				<p:commandButton value="Submit &amp; Subscribe Another Participant"
+					rendered="#{registrationView.requestCount lt 2 and registrationView.uiMode=='new'}"
+					actionListener="#{registrationView.subscribeNew}" update="grid"
+					icon="ui-icon-check"
+					style="margin-right:10px;background-color: green !important" />
+			</h:panelGrid>
+
+
+
+
+		</p:panel>
+	</h:form>
+
+</body>
+</html>
+

@@ -1,0 +1,109 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="../masterPage/masterTemplate.xhtml">
+	<ui:param name="user" value="#{attendanceView.userDetails.username}" />
+	<ui:define name="content">
+
+
+		<h:form id="frmIdentificationDetails">
+			<p:growl id="growl" showDetail="true" sticky="false"
+				globalOnly="true" />
+
+			<p:dataTable var="item" value="#{attendanceView.inviteeList}"
+				widgetVar="itemTable"
+				emptyMessage="No item found with given criteria"
+				filteredValue="#{attendanceView.filterdInviteeList}" rows="10"
+				paginator="true" selectionMode="single"
+				selection="#{attendanceView.selectedAttendace}" rowKey="#{item.id}"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+				<p:ajax event="rowSelect"
+					update=":frmIdentificationDetails:attendanceDialogPanel"
+					oncomplete="PF('dialogItem').show()" />
+
+				<p:column filterBy="#{item.id}" headerText="Id"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.id}" />
+				</p:column>
+
+				<p:column filterBy="#{item.title}" headerText="title"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.title}" />
+				</p:column>
+				<p:column filterBy="#{item.fName}" headerText="First Name"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.fName}" />
+				</p:column>
+				<p:column filterBy="#{item.lName}" headerText="Last Name"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.lName}" />
+				</p:column>
+
+				<p:column filterBy="#{item.designation}" headerText="Designation"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.designation}" />
+				</p:column>
+
+				<p:column filterBy="#{item.organization}" headerText="Organization"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.organization}" />
+				</p:column>
+
+				<p:column filterBy="#{item.workPhone}" headerText="Work Phone"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.workPhone}" />
+				</p:column>
+
+				<p:column filterBy="#{item.mobilePhone}" headerText="Mobile Phone"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.mobilePhone}" />
+				</p:column>
+
+				<p:column filterBy="#{item.email}" headerText="email"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.email}" />
+				</p:column>
+
+				<p:column filterBy="#{item.status}" headerText="Status"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.status}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:dialog header="Attendance" widgetVar="dialogItem"
+				hideEffect="fade" >
+				<p:outputPanel id="attendanceDialogPanel" style="text-align:center;">
+
+					<p:panelGrid columns="2">
+
+
+						<h:outputText value="Title" />
+						<h:outputText value="#{attendanceView.selectedAttendace.title}" />
+
+						<h:outputText value="First Name" />
+						<h:outputText value="#{attendanceView.selectedAttendace.fName}" />
+
+						<h:outputText value="Last Name" />
+						<h:outputText value="#{attendanceView.selectedAttendace.lName}" />
+
+						<h:outputText value="organization" />
+						<h:outputText
+							value="#{attendanceView.selectedAttendace.organization}" />
+
+
+						
+					</p:panelGrid>
+					<h:panelGrid columns="2" cellpadding="0">
+							<p:commandButton value="Attended"
+								action="#{attendanceView.markAttendace}"
+								update="frmIdentificationDetails" />
+						</h:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
